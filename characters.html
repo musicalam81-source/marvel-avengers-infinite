@@ -123,6 +123,18 @@ function render(){
    card.className="card";
    const portrait=document.createElement("div");
    portrait.className="portrait";
+  if(c.name==="Hulk"){
+  const img=document.createElement("img");
+  img.src="images/IMG_20261009_001854.jpg";
+  img.alt="Hulk";
+  img.loading="lazy";
+  img.style.width="100%";
+  img.style.height="100%";
+  img.style.objectFit="cover";
+  img.style.padding="0";
+  img.style.boxSizing="border-box";
+  portrait.appendChild(img);
+}else 
   if(c.name==="Captain America"){
   const img=document.createElement("img");
   img.src="images/IMG_20261009_001329.jpg";
