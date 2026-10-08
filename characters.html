@@ -1,1 +1,266 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>اختيار الشخصية | MARVEL AVENGERS : INFINITE</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 15% 20%, #17295d, transparent 35%),
+                radial-gradient(circle at 85% 80%, #38165c, transparent 35%),
+                #050711;
+            color: white;
+            padding: 30px 18px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #aeb7d0;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .characters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .character {
+            background: rgba(11, 16, 32, 0.9);
+            border: 1px solid #252e49;
+            border-radius: 18px;
+            overflow: hidden;
+            transition: 0.25s;
+        }
+
+        .character:hover {
+            transform: translateY(-4px);
+            border-color: #6d7cff;
+        }
+
+        .image {
+            height: 240px;
+            background:
+                linear-gradient(135deg, #10182d, #1c1233);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 55px;
+        }
+
+        .info {
+            padding: 18px;
+        }
+
+        .info h2 {
+            font-size: 22px;
+            margin-bottom: 7px;
+        }
+
+        .role {
+            color: #9da8c0;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #173b2a;
+            color: #72e6a0;
+            font-size: 13px;
+        }
+
+        .choose {
+            display: block;
+            margin-top: 15px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #202a4b;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .choose:hover {
+            background: #33406b;
+        }
+
+        .back {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            color: #9ba6bd;
+            text-decoration: none;
+        }
+
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .characters {
+                grid-template-columns: 1fr;
+            }
+
+            .image {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header class="header">
+            <div class="logo">🎭</div>
+
+            <h1>اختيار الشخصية</h1>
+
+            <p class="subtitle">
+                اختر شخصية واحدة لتعيش قصتها داخل عالم
+                <strong>MARVEL AVENGERS : INFINITE</strong>.
+                <br>
+                كل شخصية يمكن أن يمتلكها لاعب واحد فقط.
+            </p>
+        </header>
+
+        <section class="characters">
+
+            <article class="character">
+                <div class="image">⚡</div>
+
+                <div class="info">
+                    <h2>Thor</h2>
+                    <div class="role">بطل — Asgard</div>
+
+                    <span class="status">● متاحة</span>
+
+                    <button class="choose" type="button">
+                        اختيار الشخصية
+                    </button>
+                </div>
+            </article>
+
+            <article class="character">
+                <div class="image">🤖</div>
+
+                <div class="info">
+                    <h2>Iron Man</h2>
+                    <div class="role">بطل — Avengers</div>
+
+                    <span class="status">● متاحة</span>
+
+                    <button class="choose" type="button">
+                        اختيار الشخصية
+                    </button>
+                </div>
+            </article>
+
+            <article class="character">
+                <div class="image">🛡️</div>
+
+                <div class="info">
+                    <h2>Captain America</h2>
+                    <div class="role">بطل — Avengers</div>
+
+                    <span class="status">● متاحة</span>
+
+                    <button class="choose" type="button">
+                        اختيار الشخصية
+                    </button>
+                </div>
+            </article>
+
+            <article class="character">
+                <div class="image">💚</div>
+
+                <div class="info">
+                    <h2>Hulk</h2>
+                    <div class="role">بطل — Avengers</div>
+
+                    <span class="status">● متاحة</span>
+
+                    <button class="choose" type="button">
+                        اختيار الشخصية
+                    </button>
+                </div>
+            </article>
+
+            <article class="character">
+                <div class="image">🕷️</div>
+
+                <div class="info">
+                    <h2>Black Widow</h2>
+                    <div class="role">بطلة — S.H.I.E.L.D.</div>
+
+                    <span class="status">● متاحة</span>
+
+                    <button class="choose" type="button">
+                        اختيار الشخصية
+                    </button>
+                </div>
+            </article>
+
+            <article class="character">
+                <div class="image">🏹</div>
+
+                <div class="info">
+                    <h2>Hawkeye</h2>
+                    <div class="role">بطل — Avengers</div>
+
+                    <span class="status">● متاحة</span>
+
+                    <button class="choose" type="button">
+                        اختيار الشخصية
+                    </button>
+                </div>
+            </article>
+
+        </section>
+
+        <a class="back" href="start.html">
+            ← العودة
+        </a>
+
+    </main>
+
+</body>
+</html>
