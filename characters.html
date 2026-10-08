@@ -1,266 +1,157 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>اختيار الشخصية | MARVEL AVENGERS : INFINITE</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at 15% 20%, #17295d, transparent 35%),
-                radial-gradient(circle at 85% 80%, #38165c, transparent 35%),
-                #050711;
-            color: white;
-            padding: 30px 18px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .logo {
-            font-size: 45px;
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            font-size: 34px;
-            margin-bottom: 12px;
-        }
-
-        .subtitle {
-            color: #aeb7d0;
-            font-size: 17px;
-            line-height: 1.7;
-        }
-
-        .characters {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-        }
-
-        .character {
-            background: rgba(11, 16, 32, 0.9);
-            border: 1px solid #252e49;
-            border-radius: 18px;
-            overflow: hidden;
-            transition: 0.25s;
-        }
-
-        .character:hover {
-            transform: translateY(-4px);
-            border-color: #6d7cff;
-        }
-
-        .image {
-            height: 240px;
-            background:
-                linear-gradient(135deg, #10182d, #1c1233);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 55px;
-        }
-
-        .info {
-            padding: 18px;
-        }
-
-        .info h2 {
-            font-size: 22px;
-            margin-bottom: 7px;
-        }
-
-        .role {
-            color: #9da8c0;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .status {
-            display: inline-block;
-            padding: 7px 12px;
-            border-radius: 20px;
-            background: #173b2a;
-            color: #72e6a0;
-            font-size: 13px;
-        }
-
-        .choose {
-            display: block;
-            margin-top: 15px;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            background: #202a4b;
-            color: white;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        .choose:hover {
-            background: #33406b;
-        }
-
-        .back {
-            display: block;
-            width: fit-content;
-            margin: 35px auto 0;
-            color: #9ba6bd;
-            text-decoration: none;
-        }
-
-        @media (max-width: 500px) {
-            h1 {
-                font-size: 28px;
-            }
-
-            .characters {
-                grid-template-columns: 1fr;
-            }
-
-            .image {
-                height: 220px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الشخصيات | MARVEL AVENGERS : INFINITE</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050711;--panel:#0b1020;--border:#252e49;--accent:#7887ff;--muted:#aeb7d0}
+body{font-family:Arial,sans-serif;min-height:100vh;background:radial-gradient(circle at 15% 10%,#17295d,transparent 35%),radial-gradient(circle at 85% 70%,#35145c,transparent 35%),var(--bg);color:white;padding:24px 16px}
+.container{max-width:1100px;margin:auto}
+header{text-align:center;padding:22px 0 28px}
+.logo{font-size:42px;margin-bottom:12px}
+h1{font-size:clamp(27px,5vw,40px);margin-bottom:12px}
+header p{color:var(--muted);line-height:1.8}
+.notice{margin:0 auto 22px;padding:12px 15px;max-width:700px;background:#11182d;border:1px solid var(--border);border-radius:12px;color:#cbd3ed;font-size:14px;line-height:1.7}
+.search{width:100%;padding:15px 17px;border:1px solid var(--border);border-radius:12px;background:var(--panel);color:white;font-size:16px;outline:none;margin-bottom:17px}
+.search:focus{border-color:var(--accent)}
+.filters{display:flex;gap:9px;overflow-x:auto;padding:2px 1px 14px;margin-bottom:12px}
+.filter{white-space:nowrap;padding:11px 16px;border:1px solid var(--border);border-radius:24px;background:var(--panel);color:#dbe2fa;font-size:14px;cursor:pointer}
+.filter.active{background:var(--accent);border-color:var(--accent);color:#080b18;font-weight:bold}
+.count{color:var(--muted);font-size:14px;margin:5px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.card{overflow:hidden;background:rgba(11,16,32,.94);border:1px solid var(--border);border-radius:16px;transition:border-color .2s}
+.card:hover{border-color:var(--accent)}
+.portrait{height:190px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#111b37,#26153b);font-size:62px}
+.info{padding:16px}
+.info h2{font-size:20px;margin-bottom:8px}
+.role{font-size:13px;color:var(--muted);margin-bottom:14px}
+.tag{display:inline-block;font-size:12px;padding:6px 10px;border-radius:20px;background:#173b2a;color:#83edaa}
+.tag.review{background:#382d16;color:#f4d58b}
+.details{font-size:12px;color:#aeb7d0;line-height:1.6;margin-top:12px}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:35px 10px}
+.back{display:block;width:fit-content;margin:30px auto 8px;text-decoration:none;color:#cbd3ed;padding:12px 18px;border:1px solid var(--border);border-radius:10px}
+footer{text-align:center;color:#7f8aa8;font-size:12px;padding:25px 0 10px}
+@media(max-width:480px){body{padding:15px 12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.portrait{height:145px;font-size:48px}.info{padding:12px}.info h2{font-size:17px}.role{font-size:12px}.filter{padding:10px 13px}}
+</style>
 </head>
-
 <body>
+<main class="container">
+<header>
+<div class="logo">🎭</div>
+<h1>قاعدة الشخصيات</h1>
+<p>اختر الشخصية التي تريد تجسيدها في عالم<br><strong>MARVEL AVENGERS : INFINITE</strong></p>
+</header>
 
-    <main class="container">
+<div class="notice">🌌 تبدأ أحداث السيرفر بعد Thor: The Dark World. القائمة أولية، وحالة الشخصية تحتاج إلى تأكيد الإدارة قبل اعتماد الحجز.</div>
 
-        <header class="header">
-            <div class="logo">🎭</div>
+<input id="search" class="search" type="search" placeholder="🔍 ابحث عن اسم شخصية..." aria-label="ابحث عن شخصية">
 
-            <h1>اختيار الشخصية</h1>
+<nav class="filters" aria-label="تصنيفات الشخصيات">
+<button class="filter active" data-category="all">الكل</button>
+<button class="filter" data-category="heroes">🦸 الأبطال</button>
+<button class="filter" data-category="villains">😈 الأشرار</button>
+<button class="filter" data-category="shield">🛡️ S.H.I.E.L.D.</button>
+<button class="filter" data-category="support">🌌 المساندون</button>
+<button class="filter" data-category="oc">🧬 شخصيات أصلية</button>
+</nav>
 
-            <p class="subtitle">
-                اختر شخصية واحدة لتعيش قصتها داخل عالم
-                <strong>MARVEL AVENGERS : INFINITE</strong>.
-                <br>
-                كل شخصية يمكن أن يمتلكها لاعب واحد فقط.
-            </p>
-        </header>
+<div class="count" id="count" aria-live="polite"></div>
+<section class="grid" id="grid" aria-label="قائمة الشخصيات"></section>
 
-        <section class="characters">
+<a class="back" href="start.html">← العودة إلى صفحة البداية</a>
+<footer>MARVEL AVENGERS : INFINITE · عالم واحد، قصص لا نهائية</footer>
+</main>
 
-            <article class="character">
-                <div class="image">⚡</div>
+<script>
+const characters = [
+{name:"Thor",ar:"ثور",category:"heroes",symbol:"⚡",role:"بطل أسغاردي",note:"متاح للاختيار المبدئي"},
+{name:"Iron Man",ar:"آيرون مان",category:"heroes",symbol:"🤖",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
+{name:"Captain America",ar:"كابتن أمريكا",category:"heroes",symbol:"🛡️",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
+{name:"Hulk",ar:"هالك",category:"heroes",symbol:"💚",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
+{name:"Black Widow",ar:"بلاك ويدو",category:"heroes",symbol:"🕷️",role:"بطلة — Avengers",note:"متاح للاختيار المبدئي"},
+{name:"Hawkeye",ar:"هوك آي",category:"heroes",symbol:"🏹",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
+{name:"War Machine",ar:"وور ماشين",category:"heroes",symbol:"⚙️",role:"بطل — حليف آيرون مان",note:"متاح للاختيار المبدئي"},
+{name:"Falcon",ar:"فالكون",category:"heroes",symbol:"🪽",role:"بطل — حليف كابتن أمريكا",note:"تُراجع ملاءمته للخط الزمني"},
+{name:"Loki",ar:"لوكي",category:"villains",symbol:"🐍",role:"شخصية أسغاردية معقدة",note:"تُراجع حالته وفق الخط الزمني"},
+{name:"Thanos",ar:"ثانوس",category:"villains",symbol:"🟣",role:"تهديد كوني",note:"يتطلب موافقة الإدارة"},
+{name:"Red Skull",ar:"ريد سكول",category:"villains",symbol:"☠️",role:"عدو قديم لكابتن أمريكا",note:"تُراجع حالته وفق القصة"},
+{name:"Abomination",ar:"أبومينيشن",category:"villains",symbol:"👹",role:"خصم قوي",note:"يتطلب موافقة الإدارة"},
+{name:"Whiplash",ar:"ويبلاش",category:"villains",symbol:"⚡",role:"خصم آيرون مان",note:"تُراجع حالته وفق الخط الزمني"},
+{name:"Aldrich Killian",ar:"ألدريتش كيليان",category:"villains",symbol:"🔥",role:"خصم آيرون مان",note:"تُراجع حالته وفق الخط الزمني"},
+{name:"Malekith",ar:"مالكيث",category:"villains",symbol:"🌑",role:"زعيم الإلف المظلم",note:"تُراجع حالته بعد أحداث الفيلم"},
+{name:"Nick Fury",ar:"نيك فيوري",category:"shield",symbol:"🕶️",role:"مدير S.H.I.E.L.D.",note:"متاح للاختيار المبدئي"},
+{name:"Maria Hill",ar:"ماريا هيل",category:"shield",symbol:"🛡️",role:"قيادية في S.H.I.E.L.D.",note:"متاح للاختيار المبدئي"},
+{name:"Phil Coulson",ar:"فيل كولسون",category:"shield",symbol:"📁",role:"عميل S.H.I.E.L.D.",note:"تُراجع حالته وفق الخط الزمني"},
+{name:"Jasper Sitwell",ar:"جاسبر سيتويل",category:"shield",symbol:"🕵️",role:"عميل استخبارات",note:"تُراجع حالته وفق القصة"},
+{name:"Jane Foster",ar:"جين فوستر",category:"support",symbol:"🔬",role:"عالمة — مرتبطة بثور",note:"متاح للاختيار المبدئي"},
+{name:"Erik Selvig",ar:"إريك سيلفيغ",category:"support",symbol:"🔭",role:"عالم",note:"متاح للاختيار المبدئي"},
+{name:"Darcy Lewis",ar:"دارسي لويس",category:"support",symbol:"📚",role:"باحثة ومساعدة",note:"متاح للاختيار المبدئي"},
+{name:"Pepper Potts",ar:"بيبر بوتس",category:"support",symbol:"💼",role:"قيادية في Stark Industries",note:"متاح للاختيار المبدئي"},
+{name:"Heimdall",ar:"هايمدال",category:"support",symbol:"🌈",role:"حارس أسغارد",note:"متاح للاختيار المبدئي"},
+{name:"OC — شخصية أصلية",ar:"شخصيتك الخاصة",category:"oc",symbol:"🧬",role:"شخصية من ابتكار اللاعب",note:"تحتاج إلى موافقة الإدارة"}
+];
 
-                <div class="info">
-                    <h2>Thor</h2>
-                    <div class="role">بطل — Asgard</div>
+const names = {
+all:"كل الشخصيات",heroes:"الأبطال",villains:"الأشرار",
+shield:"S.H.I.E.L.D.",support:"الشخصيات المساندة",oc:"الشخصيات الأصلية"
+};
+let selectedCategory = "all";
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const count = document.getElementById("count");
 
-                    <span class="status">● متاحة</span>
-
-                    <button class="choose" type="button">
-                        اختيار الشخصية
-                    </button>
-                </div>
-            </article>
-
-            <article class="character">
-                <div class="image">🤖</div>
-
-                <div class="info">
-                    <h2>Iron Man</h2>
-                    <div class="role">بطل — Avengers</div>
-
-                    <span class="status">● متاحة</span>
-
-                    <button class="choose" type="button">
-                        اختيار الشخصية
-                    </button>
-                </div>
-            </article>
-
-            <article class="character">
-                <div class="image">🛡️</div>
-
-                <div class="info">
-                    <h2>Captain America</h2>
-                    <div class="role">بطل — Avengers</div>
-
-                    <span class="status">● متاحة</span>
-
-                    <button class="choose" type="button">
-                        اختيار الشخصية
-                    </button>
-                </div>
-            </article>
-
-            <article class="character">
-                <div class="image">💚</div>
-
-                <div class="info">
-                    <h2>Hulk</h2>
-                    <div class="role">بطل — Avengers</div>
-
-                    <span class="status">● متاحة</span>
-
-                    <button class="choose" type="button">
-                        اختيار الشخصية
-                    </button>
-                </div>
-            </article>
-
-            <article class="character">
-                <div class="image">🕷️</div>
-
-                <div class="info">
-                    <h2>Black Widow</h2>
-                    <div class="role">بطلة — S.H.I.E.L.D.</div>
-
-                    <span class="status">● متاحة</span>
-
-                    <button class="choose" type="button">
-                        اختيار الشخصية
-                    </button>
-                </div>
-            </article>
-
-            <article class="character">
-                <div class="image">🏹</div>
-
-                <div class="info">
-                    <h2>Hawkeye</h2>
-                    <div class="role">بطل — Avengers</div>
-
-                    <span class="status">● متاحة</span>
-
-                    <button class="choose" type="button">
-                        اختيار الشخصية
-                    </button>
-                </div>
-            </article>
-
-        </section>
-
-        <a class="back" href="start.html">
-            ← العودة
-        </a>
-
-    </main>
-
+function render(){
+ const term = search.value.trim().toLowerCase();
+ const list = characters.filter(c =>
+ (selectedCategory==="all" || c.category===selectedCategory) &&
+ (c.name.toLowerCase().includes(term) || c.ar.toLowerCase().includes(term))
+ );
+ count.textContent = names[selectedCategory] + " · " + list.length;
+ grid.replaceChildren();
+ if(!list.length){
+   const empty=document.createElement("div");
+   empty.className="empty";
+   empty.textContent="لم نعثر على شخصية بهذا الاسم.";
+   grid.appendChild(empty);
+   return;
+ }
+ list.forEach(c=>{
+   const card=document.createElement("article");
+   card.className="card";
+   const portrait=document.createElement("div");
+   portrait.className="portrait";
+   portrait.textContent=c.symbol;
+   portrait.setAttribute("aria-label","صورة مؤقتة للشخصية");
+   const info=document.createElement("div");
+   info.className="info";
+   const title=document.createElement("h2");
+   title.textContent=c.name;
+   const role=document.createElement("div");
+   role.className="role";
+   role.textContent=c.ar+" · "+c.role;
+   const status=document.createElement("span");
+   status.className="tag "+(c.category==="oc" || c.note.includes("موافقة") || c.note.includes("تُراجع") ? "review":"");
+   status.textContent=c.category==="oc"?"تحتاج موافقة":(status.classList.contains("review")?"تحتاج مراجعة":"متاحة مبدئيًا");
+   const note=document.createElement("p");
+   note.className="details";
+   note.textContent=c.note;
+   info.append(title,role,status,note);
+   card.append(portrait,info);
+   grid.appendChild(card);
+ });
+}
+document.querySelectorAll(".filter").forEach(button=>{
+ button.addEventListener("click",()=>{
+  selectedCategory=button.dataset.category;
+  document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b===button));
+  render();
+ });
+});
+search.addEventListener("input",render);
+render();
+</script>
 </body>
 </html>
