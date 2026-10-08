@@ -123,8 +123,18 @@ function render(){
    card.className="card";
    const portrait=document.createElement("div");
    portrait.className="portrait";
-   portrait.textContent=c.symbol;
-   portrait.setAttribute("aria-label","صورة مؤقتة للشخصية");
+   if(c.name==="Thor"){
+  const img=document.createElement("img");
+  img.src="images/40747151783756ff94b39e018048d30e.jpg";
+  img.alt="Thor";
+  img.loading="lazy";
+  img.style.width="100%";
+  img.style.height="100%";
+  img.style.objectFit="cover";
+  portrait.appendChild(img);
+}else{
+  portrait.textContent=c.symbol;
+   }
    const info=document.createElement("div");
    info.className="info";
    const title=document.createElement("h2");
