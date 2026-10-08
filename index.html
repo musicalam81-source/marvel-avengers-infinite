@@ -13,171 +13,442 @@
       padding: 0;
     }
 
+    :root {
+      --bg: #050711;
+      --panel: #0b0f1d;
+      --panel-light: #111729;
+      --border: #202942;
+      --text: #ffffff;
+      --muted: #9ba6bd;
+      --accent: #6d7cff;
+      --accent-2: #8c5cff;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background: #080b14;
-      color: #ffffff;
+      background:
+        radial-gradient(circle at 80% 10%, rgba(109,124,255,.16), transparent 30%),
+        radial-gradient(circle at 20% 30%, rgba(140,92,255,.10), transparent 25%),
+        var(--bg);
+      color: var(--text);
       min-height: 100vh;
+      line-height: 1.6;
     }
 
-    header {
-      padding: 25px;
-      text-align: center;
-      border-bottom: 1px solid #202638;
-      background: #0d111d;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    header h1 {
-      font-size: 28px;
-      margin-bottom: 8px;
+    /* NAVBAR */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(5,7,17,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
     }
 
-    header p {
-      color: #9ca6bd;
-      font-size: 15px;
-    }
-
-    .container {
-      max-width: 1100px;
+    .nav-inner {
+      max-width: 1180px;
       margin: auto;
-      padding: 30px 20px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
+
+    .logo {
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: .5px;
+    }
+
+    .logo span {
+      color: #8f9aff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .nav-button {
+      background: var(--accent);
+      padding: 10px 17px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    /* HERO */
 
     .hero {
+      max-width: 1180px;
+      margin: auto;
+      padding: 95px 20px 80px;
       text-align: center;
-      padding: 60px 20px;
     }
 
-    .hero h2 {
-      font-size: 38px;
-      margin-bottom: 15px;
+    .badge {
+      display: inline-block;
+      padding: 7px 13px;
+      border: 1px solid #303b62;
+      background: rgba(109,124,255,.08);
+      color: #aeb7ff;
+      border-radius: 50px;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 7vw, 76px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 span {
+      color: #8995ff;
     }
 
     .hero p {
-      color: #aeb7ca;
-      max-width: 600px;
+      max-width: 680px;
       margin: auto;
-      line-height: 1.8;
+      color: var(--muted);
+      font-size: 17px;
     }
 
-    .buttons {
-      margin-top: 30px;
+    .hero-buttons {
+      margin-top: 32px;
       display: flex;
       justify-content: center;
       gap: 12px;
       flex-wrap: wrap;
     }
 
-    button {
-      border: none;
-      padding: 13px 25px;
+    .primary,
+    .secondary {
+      padding: 14px 25px;
       border-radius: 10px;
-      background: #5865f2;
-      color: white;
       font-size: 15px;
-      cursor: pointer;
+      font-weight: bold;
+      border: 1px solid var(--border);
     }
 
-    button.secondary {
-      background: #1a2030;
-      border: 1px solid #30394f;
+    .primary {
+      background: var(--accent);
     }
 
-    .features {
+    .secondary {
+      background: var(--panel);
+    }
+
+    /* SECTIONS */
+
+    .section {
+      max-width: 1180px;
+      margin: auto;
+      padding: 30px 20px 80px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-title h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+    }
+
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 15px;
-      margin-top: 30px;
     }
 
     .card {
-      background: #101522;
-      border: 1px solid #20283a;
-      border-radius: 14px;
-      padding: 22px;
+      background: linear-gradient(
+        145deg,
+        rgba(17,23,41,.95),
+        rgba(9,13,25,.95)
+      );
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: #39466e;
+    }
+
+    .icon {
+      font-size: 30px;
+      margin-bottom: 15px;
     }
 
     .card h3 {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      font-size: 18px;
     }
 
     .card p {
-      color: #9da8bd;
-      line-height: 1.7;
+      color: var(--muted);
       font-size: 14px;
     }
 
+    /* GAME MASTER */
+
+    .gm {
+      max-width: 1180px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+    }
+
+    .gm-box {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(109,124,255,.15), transparent 30%),
+        var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .gm-text {
+      max-width: 650px;
+    }
+
+    .gm-text h2 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .gm-text p {
+      color: var(--muted);
+    }
+
+    .gm-icon {
+      font-size: 70px;
+    }
+
+    /* FOOTER */
+
     footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 20px;
       text-align: center;
-      padding: 30px 20px;
-      color: #69748a;
-      border-top: 1px solid #202638;
-      margin-top: 50px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 800px) {
+      .nav-links {
+        display: none;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gm-box {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .hero {
+        padding-top: 70px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-button {
+        padding: 9px 13px;
+      }
+
+      .gm-box {
+        padding: 28px 20px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>🌌 MARVEL AVENGERS : INFINITE</h1>
-    <p>الكون اللامتناهي</p>
-  </header>
+  <!-- NAVBAR -->
 
-  <main class="container">
+  <nav>
+    <div class="nav-inner">
 
-    <section class="hero">
-      <h2>عِش عالم Marvel</h2>
-
-      <p>
-        منصة Roleplay كتابية تجمع اللاعبين في عالم واحد،
-        حيث تختار شخصيتك وتكتب قصتها وتتفاعل مع عالم حي ومتغير.
-      </p>
-
-      <div class="buttons">
-        <button>دخول المنصة</button>
-        <button class="secondary">عن العالم</button>
+      <div class="logo">
+        🌌 MARVEL <span>AVENGERS : INFINITE</span>
       </div>
-    </section>
 
-    <section class="features">
+      <div class="nav-links">
+        <a href="#">الرئيسية</a>
+        <a href="#">العالم</a>
+        <a href="#">الشخصيات</a>
+        <a href="#">الـTimeline</a>
+      </div>
+
+      <a class="nav-button" href="#">
+        تسجيل الدخول
+      </a>
+
+    </div>
+  </nav>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="badge">
+      🌌 عالم Marvel RP كتابي
+    </div>
+
+    <h1>
+      عِش القصة.<br>
+      <span>غيّر العالم.</span>
+    </h1>
+
+    <p>
+      منصة Roleplay كتابية تجمع اللاعبين في عالم Marvel واحد،
+      حيث تختار شخصيتك، تتخذ قراراتك، وتتفاعل مع عالم يتطور مع كل حدث.
+    </p>
+
+    <div class="hero-buttons">
+
+      <a class="primary" href="#">
+        🎭 ابدأ قصتك
+      </a>
+
+      <a class="secondary" href="#">
+        🌎 استكشف العالم
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEATURES -->
+
+  <section class="section">
+
+    <div class="section-title">
+      <h2>🌌 عالمك داخل الـRP</h2>
+      <p>كل ما تحتاجه لصناعة قصتك موجود في مكان واحد.</p>
+    </div>
+
+    <div class="grid">
 
       <div class="card">
-        <h3>🎭 الشخصيات</h3>
+        <div class="icon">🎭</div>
+        <h3>الشخصيات</h3>
         <p>
-          اختر شخصية Marvel الخاصة بك وعش قصتها داخل العالم.
+          اختر شخصية Marvel الخاصة بك وعش قصتها وقدراتها داخل العالم.
         </p>
       </div>
 
       <div class="card">
-        <h3>💬 الـRoleplay</h3>
+        <div class="icon">💬</div>
+        <h3>الـRoleplay</h3>
         <p>
-          تفاعل مع اللاعبين واكتب أحداث قصتك في عالم واحد.
+          اكتب تصرفات شخصيتك وحواراتها وتفاعل مع بقية اللاعبين.
         </p>
       </div>
 
       <div class="card">
-        <h3>🌎 العالم</h3>
+        <div class="icon">🌎</div>
+        <h3>العالم</h3>
         <p>
-          استكشف الأماكن والأحداث والأخبار التي تحدث داخل عالم الـRP.
+          استكشف المدن والأماكن والأحداث التي تتغير مع تقدم القصة.
         </p>
       </div>
 
       <div class="card">
-        <h3>🤖 Game Master</h3>
+        <div class="icon">🧠</div>
+        <h3>ذاكرة العالم</h3>
         <p>
-          عالم يتفاعل مع الشخصيات ويقدم NPCs وأحداثًا وتطورات جديدة.
+          الأحداث المهمة والعلاقات والمعلومات تستمر مع تطور الـRP.
         </p>
       </div>
 
-    </section>
+    </div>
 
-  </main>
+  </section>
+
+
+  <!-- GAME MASTER -->
+
+  <section class="gm">
+
+    <div class="gm-box">
+
+      <div class="gm-text">
+
+        <h2>🤖 Game Master</h2>
+
+        <p>
+          العالم لا ينتظر اللاعبين ليقرروا كل شيء.
+          الأحداث، الـNPCs، الأخبار والمواقف يمكن أن تتطور حول شخصياتكم
+          وتفتح طرقًا جديدة للقصة، بينما تبقى شخصيتك تحت سيطرتك الكاملة.
+        </p>
+
+      </div>
+
+      <div class="gm-icon">
+        🌌
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
 
   <footer>
-    MARVEL AVENGERS : INFINITE
-    <br>
-    The universe is yours to live. 🌌
+
+    <div>
+      MARVEL AVENGERS : INFINITE
+    </div>
+
+    <div style="margin-top:8px;">
+      أنت لا تدخل لتشاهد عالم Marvel...
+      أنت تدخل لتعيش داخله. 🌌
+    </div>
+
   </footer>
 
 </body>
