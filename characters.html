@@ -230,6 +230,50 @@ document.querySelectorAll(".filter").forEach(button=>{
 });
 search.addEventListener("input",render);
 render();
+ async function loadCharactersFromSupabase() {
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/rest/v1/characters?select=name,universe_role&order=name.asc`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("تعذر تحميل الشخصيات من قاعدة البيانات.");
+    }
+
+    const rows = await response.json();
+
+    const existing = new Map(characters.map(c => [c.name, c]));
+
+    characters = rows
+      .filter(row => row.name !== "Thanos")
+      .map(row => {
+        const old = existing.get(row.name);
+
+        return old || {
+          name: row.name,
+          ar: row.name,
+          category: row.universe_role === "villain" ? "villains" :
+                    row.universe_role === "original" ? "oc" : "heroes",
+          symbol: "🌌",
+          role: row.universe_role,
+          note: "حالة الشخصية تحتاج إلى مراجعة الإدارة"
+        };
+      });
+
+    render();
+  } catch (error) {
+    console.error(error);
+    count.textContent = "تعذر تحميل الشخصيات من قاعدة البيانات؛ نعرض القائمة المحلية.";
+  }
+}
+
+loadCharactersFromSupabase();
 </script>
 </body>
 </html>
