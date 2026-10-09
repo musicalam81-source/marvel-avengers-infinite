@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -25,6 +24,7 @@ header p{color:var(--muted);line-height:1.8}
 .card{overflow:hidden;background:rgba(11,16,32,.94);border:1px solid var(--border);border-radius:16px;transition:border-color .2s}
 .card:hover{border-color:var(--accent)}
 .portrait{height:190px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#111b37,#26153b);font-size:62px}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
 .info{padding:16px}
 .info h2{font-size:20px;margin-bottom:8px}
 .role{font-size:13px;color:var(--muted);margin-bottom:14px}
@@ -34,7 +34,15 @@ header p{color:var(--muted);line-height:1.8}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:35px 10px}
 .back{display:block;width:fit-content;margin:30px auto 8px;text-decoration:none;color:#cbd3ed;padding:12px 18px;border:1px solid var(--border);border-radius:10px}
 footer{text-align:center;color:#7f8aa8;font-size:12px;padding:25px 0 10px}
-@media(max-width:480px){body{padding:15px 12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.portrait{height:145px;font-size:48px}.info{padding:12px}.info h2{font-size:17px}.role{font-size:12px}.filter{padding:10px 13px}}
+@media(max-width:480px){
+body{padding:15px 12px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.portrait{height:145px;font-size:48px}
+.info{padding:12px}
+.info h2{font-size:17px}
+.role{font-size:12px}
+.filter{padding:10px 13px}
+}
 </style>
 </head>
 <body>
@@ -58,7 +66,7 @@ footer{text-align:center;color:#7f8aa8;font-size:12px;padding:25px 0 10px}
 <button class="filter" data-category="oc">🧬 شخصيات أصلية</button>
 </nav>
 
-<div class="count" id="count" aria-live="polite"></div>
+<div class="count" id="count" aria-live="polite">جارٍ تحميل الشخصيات...</div>
 <section class="grid" id="grid" aria-label="قائمة الشخصيات"></section>
 
 <a class="back" href="start.html">← العودة إلى صفحة البداية</a>
@@ -66,171 +74,140 @@ footer{text-align:center;color:#7f8aa8;font-size:12px;padding:25px 0 10px}
 </main>
 
 <script>
-const SUPABASE_URL = "https://tkwskjinrfbwwnwlyxjp.supabase.co";
-const SUPABASE_KEY = "sb_publishable_6oBvR-50nHxk5uEEX8Rs6Q_h58lFGki";
+'use strict';
 
-let characters = [
-{name:"Thor",ar:"ثور",category:"heroes",symbol:"⚡",role:"بطل أسغاردي",note:"متاح للاختيار المبدئي"},
-{name:"Iron Man",ar:"آيرون مان",category:"heroes",symbol:"🤖",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
-{name:"Captain America",ar:"كابتن أمريكا",category:"heroes",symbol:"🛡️",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
-{name:"Hulk",ar:"هالك",category:"heroes",symbol:"💚",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
-{name:"Black Widow",ar:"بلاك ويدو",category:"heroes",symbol:"🕷️",role:"بطلة — Avengers",note:"متاح للاختيار المبدئي"},
-{name:"Hawkeye",ar:"هوك آي",category:"heroes",symbol:"🏹",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
-{name:"War Machine",ar:"وور ماشين",category:"heroes",symbol:"⚙️",role:"بطل — حليف آيرون مان",note:"متاح للاختيار المبدئي"},
-{name:"Falcon",ar:"فالكون",category:"heroes",symbol:"🪽",role:"بطل — حليف كابتن أمريكا",note:"تُراجع ملاءمته للخط الزمني"},
-{name:"Loki",ar:"لوكي",category:"villains",symbol:"🐍",role:"شخصية أسغاردية معقدة",note:"تُراجع حالته وفق الخط الزمني"},
-{name:"Red Skull",ar:"ريد سكول",category:"villains",symbol:"☠️",role:"عدو قديم لكابتن أمريكا",note:"تُراجع حالته وفق القصة"},
-{name:"Abomination",ar:"أبومينيشن",category:"villains",symbol:"👹",role:"خصم قوي",note:"يتطلب موافقة الإدارة"},
-{name:"Whiplash",ar:"ويبلاش",category:"villains",symbol:"⚡",role:"خصم آيرون مان",note:"تُراجع حالته وفق الخط الزمني"},
-{name:"Aldrich Killian",ar:"ألدريتش كيليان",category:"villains",symbol:"🔥",role:"خصم آيرون مان",note:"تُراجع حالته وفق الخط الزمني"},
-{name:"Malekith",ar:"مالكيث",category:"villains",symbol:"🌑",role:"زعيم الإلف المظلم",note:"تُراجع حالته بعد أحداث الفيلم"},
-{name:"Nick Fury",ar:"نيك فيوري",category:"shield",symbol:"🕶️",role:"مدير S.H.I.E.L.D.",note:"متاح للاختيار المبدئي"},
-{name:"Maria Hill",ar:"ماريا هيل",category:"shield",symbol:"🛡️",role:"قيادية في S.H.I.E.L.D.",note:"متاح للاختيار المبدئي"},
-{name:"Phil Coulson",ar:"فيل كولسون",category:"shield",symbol:"📁",role:"عميل S.H.I.E.L.D.",note:"تُراجع حالته وفق الخط الزمني"},
-{name:"Jasper Sitwell",ar:"جاسبر سيتويل",category:"shield",symbol:"🕵️",role:"عميل استخبارات",note:"تُراجع حالته وفق القصة"},
-{name:"Jane Foster",ar:"جين فوستر",category:"support",symbol:"🔬",role:"عالمة — مرتبطة بثور",note:"متاح للاختيار المبدئي"},
-{name:"Erik Selvig",ar:"إريك سيلفيغ",category:"support",symbol:"🔭",role:"عالم",note:"متاح للاختيار المبدئي"},
-{name:"Darcy Lewis",ar:"دارسي لويس",category:"support",symbol:"📚",role:"باحثة ومساعدة",note:"متاح للاختيار المبدئي"},
-{name:"Pepper Potts",ar:"بيبر بوتس",category:"support",symbol:"💼",role:"قيادية في Stark Industries",note:"متاح للاختيار المبدئي"},
-{name:"Heimdall",ar:"هايمدال",category:"support",symbol:"🌈",role:"حارس أسغارد",note:"متاح للاختيار المبدئي"},
-{name:"OC — شخصية أصلية",ar:"شخصيتك الخاصة",category:"oc",symbol:"🧬",role:"شخصية من ابتكار اللاعب",note:"تحتاج إلى موافقة الإدارة"}
+const SUPABASE_URL = 'https://tkwskjinrfbwwnwlyxjp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_6oBvR-50nHxk5uEEX8Rs6Q_h58lFGki';
+
+const localCharacters = [
+{name:'Thor',ar:'ثور',category:'heroes',symbol:'⚡',role:'بطل أسغاردي',note:'متاح للاختيار المبدئي',image:'images/IMG_20261008_235233.jpg'},
+{name:'Iron Man',ar:'آيرون مان',category:'heroes',symbol:'🤖',role:'بطل — Avengers',note:'متاح للاختيار المبدئي',image:'images/IMG_20261009_000559.jpg'},
+{name:'Captain America',ar:'كابتن أمريكا',category:'heroes',symbol:'🛡️',role:'بطل — Avengers',note:'متاح للاختيار المبدئي',image:'images/IMG_20261009_001329.jpg'},
+{name:'Hulk',ar:'هالك',category:'heroes',symbol:'💚',role:'بطل — Avengers',note:'متاح للاختيار المبدئي',image:'images/IMG_20261009_001854.jpg'},
+{name:'Black Widow',ar:'بلاك ويدو',category:'heroes',symbol:'🕷️',role:'بطلة — Avengers',note:'متاح للاختيار المبدئي'},
+{name:'Hawkeye',ar:'هوك آي',category:'heroes',symbol:'🏹',role:'بطل — Avengers',note:'متاح للاختيار المبدئي'},
+{name:'War Machine',ar:'وور ماشين',category:'heroes',symbol:'⚙️',role:'بطل — حليف آيرون مان',note:'متاح للاختيار المبدئي'},
+{name:'Falcon',ar:'فالكون',category:'heroes',symbol:'🪽',role:'بطل — حليف كابتن أمريكا',note:'تُراجع ملاءمته للخط الزمني'},
+{name:'Loki',ar:'لوكي',category:'villains',symbol:'🐍',role:'شخصية أسغاردية معقدة',note:'تُراجع حالته وفق الخط الزمني'},
+{name:'Red Skull',ar:'ريد سكول',category:'villains',symbol:'☠️',role:'عدو قديم لكابتن أمريكا',note:'تُراجع حالته وفق القصة'},
+{name:'Abomination',ar:'أبومينيشن',category:'villains',symbol:'👹',role:'خصم قوي',note:'يتطلب موافقة الإدارة'},
+{name:'Whiplash',ar:'ويبلاش',category:'villains',symbol:'⚡',role:'خصم آيرون مان',note:'تُراجع حالته وفق الخط الزمني'},
+{name:'Aldrich Killian',ar:'ألدريتش كيليان',category:'villains',symbol:'🔥',role:'خصم آيرون مان',note:'تُراجع حالته وفق الخط الزمني'},
+{name:'Malekith',ar:'مالكيث',category:'villains',symbol:'🌑',role:'زعيم الإلف المظلم',note:'تُراجع حالته بعد أحداث الفيلم'},
+{name:'Nick Fury',ar:'نيك فيوري',category:'shield',symbol:'🕶️',role:'مدير S.H.I.E.L.D.',note:'متاح للاختيار المبدئي'},
+{name:'Maria Hill',ar:'ماريا هيل',category:'shield',symbol:'🛡️',role:'قيادية في S.H.I.E.L.D.',note:'متاح للاختيار المبدئي'},
+{name:'Phil Coulson',ar:'فيل كولسون',category:'shield',symbol:'📁',role:'عميل S.H.I.E.L.D.',note:'تُراجع حالته وفق الخط الزمني'},
+{name:'Jasper Sitwell',ar:'جاسبر سيتويل',category:'shield',symbol:'🕵️',role:'عميل استخبارات',note:'تُراجع حالته وفق القصة'},
+{name:'Jane Foster',ar:'جين فوستر',category:'support',symbol:'🔬',role:'عالمة — مرتبطة بثور',note:'متاح للاختيار المبدئي'},
+{name:'Erik Selvig',ar:'إريك سيلفيغ',category:'support',symbol:'🔭',role:'عالم',note:'متاح للاختيار المبدئي'},
+{name:'Darcy Lewis',ar:'دارسي لويس',category:'support',symbol:'📚',role:'باحثة ومساعدة',note:'متاح للاختيار المبدئي'},
+{name:'Pepper Potts',ar:'بيبر بوتس',category:'support',symbol:'💼',role:'قيادية في Stark Industries',note:'متاح للاختيار المبدئي'},
+{name:'Heimdall',ar:'هايمدال',category:'support',symbol:'🌈',role:'حارس أسغارد',note:'متاح للاختيار المبدئي'},
+{name:'OC — شخصية أصلية',ar:'شخصيتك الخاصة',category:'oc',symbol:'🧬',role:'شخصية من ابتكار اللاعب',note:'تحتاج إلى موافقة الإدارة'}
 ];
-{name:"Thor",ar:"ثور",category:"heroes",symbol:"⚡",role:"بطل أسغاردي",note:"متاح للاختيار المبدئي"},
-{name:"Iron Man",ar:"آيرون مان",category:"heroes",symbol:"🤖",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
-{name:"Captain America",ar:"كابتن أمريكا",category:"heroes",symbol:"🛡️",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
-{name:"Hulk",ar:"هالك",category:"heroes",symbol:"💚",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
-{name:"Black Widow",ar:"بلاك ويدو",category:"heroes",symbol:"🕷️",role:"بطلة — Avengers",note:"متاح للاختيار المبدئي"},
-{name:"Hawkeye",ar:"هوك آي",category:"heroes",symbol:"🏹",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
-{name:"War Machine",ar:"وور ماشين",category:"heroes",symbol:"⚙️",role:"بطل — حليف آيرون مان",note:"متاح للاختيار المبدئي"},
-{name:"Falcon",ar:"فالكون",category:"heroes",symbol:"🪽",role:"بطل — حليف كابتن أمريكا",note:"تُراجع ملاءمته للخط الزمني"},
-{name:"Loki",ar:"لوكي",category:"villains",symbol:"🐍",role:"شخصية أسغاردية معقدة",note:"تُراجع حالته وفق الخط الزمني"},
-{name:"Thanos",ar:"ثانوس",category:"villains",symbol:"🟣",role:"تهديد كوني",note:"يتطلب موافقة الإدارة"},
-{name:"Red Skull",ar:"ريد سكول",category:"villains",symbol:"☠️",role:"عدو قديم لكابتن أمريكا",note:"تُراجع حالته وفق القصة"},
-{name:"Abomination",ar:"أبومينيشن",category:"villains",symbol:"👹",role:"خصم قوي",note:"يتطلب موافقة الإدارة"},
-{name:"Whiplash",ar:"ويبلاش",category:"villains",symbol:"⚡",role:"خصم آيرون مان",note:"تُراجع حالته وفق الخط الزمني"},
-{name:"Aldrich Killian",ar:"ألدريتش كيليان",category:"villains",symbol:"🔥",role:"خصم آيرون مان",note:"تُراجع حالته وفق الخط الزمني"},
-{name:"Malekith",ar:"مالكيث",category:"villains",symbol:"🌑",role:"زعيم الإلف المظلم",note:"تُراجع حالته بعد أحداث الفيلم"},
-{name:"Nick Fury",ar:"نيك فيوري",category:"shield",symbol:"🕶️",role:"مدير S.H.I.E.L.D.",note:"متاح للاختيار المبدئي"},
-{name:"Maria Hill",ar:"ماريا هيل",category:"shield",symbol:"🛡️",role:"قيادية في S.H.I.E.L.D.",note:"متاح للاختيار المبدئي"},
-{name:"Phil Coulson",ar:"فيل كولسون",category:"shield",symbol:"📁",role:"عميل S.H.I.E.L.D.",note:"تُراجع حالته وفق الخط الزمني"},
-{name:"Jasper Sitwell",ar:"جاسبر سيتويل",category:"shield",symbol:"🕵️",role:"عميل استخبارات",note:"تُراجع حالته وفق القصة"},
-{name:"Jane Foster",ar:"جين فوستر",category:"support",symbol:"🔬",role:"عالمة — مرتبطة بثور",note:"متاح للاختيار المبدئي"},
-{name:"Erik Selvig",ar:"إريك سيلفيغ",category:"support",symbol:"🔭",role:"عالم",note:"متاح للاختيار المبدئي"},
-{name:"Darcy Lewis",ar:"دارسي لويس",category:"support",symbol:"📚",role:"باحثة ومساعدة",note:"متاح للاختيار المبدئي"},
-{name:"Pepper Potts",ar:"بيبر بوتس",category:"support",symbol:"💼",role:"قيادية في Stark Industries",note:"متاح للاختيار المبدئي"},
-{name:"Heimdall",ar:"هايمدال",category:"support",symbol:"🌈",role:"حارس أسغارد",note:"متاح للاختيار المبدئي"},
-{name:"OC — شخصية أصلية",ar:"شخصيتك الخاصة",category:"oc",symbol:"🧬",role:"شخصية من ابتكار اللاعب",note:"تحتاج إلى موافقة الإدارة"}
-];
+
+let characters = [...localCharacters];
 
 const names = {
-all:"كل الشخصيات",heroes:"الأبطال",villains:"الأشرار",
-shield:"S.H.I.E.L.D.",support:"الشخصيات المساندة",oc:"الشخصيات الأصلية"
+all:'كل الشخصيات',
+heroes:'الأبطال',
+villains:'الأشرار',
+shield:'S.H.I.E.L.D.',
+support:'الشخصيات المساندة',
+oc:'الشخصيات الأصلية'
 };
-let selectedCategory = "all";
-const grid = document.getElementById("grid");
-const search = document.getElementById("search");
-const count = document.getElementById("count");
+
+let selectedCategory = 'all';
+const grid = document.getElementById('grid');
+const search = document.getElementById('search');
+const count = document.getElementById('count');
 
 function render(){
- const term = search.value.trim().toLowerCase();
- const list = characters.filter(c =>
- (selectedCategory==="all" || c.category===selectedCategory) &&
- (c.name.toLowerCase().includes(term) || c.ar.toLowerCase().includes(term))
- );
- count.textContent = names[selectedCategory] + " · " + list.length;
- grid.replaceChildren();
- if(!list.length){
-   const empty=document.createElement("div");
-   empty.className="empty";
-   empty.textContent="لم نعثر على شخصية بهذا الاسم.";
-   grid.appendChild(empty);
-   return;
- }
- list.forEach(c=>{
-   const card=document.createElement("article");
-   card.className="card";
-   const portrait=document.createElement("div");
-   portrait.className="portrait";
-  if(c.name==="Hulk"){
-  const img=document.createElement("img");
-  img.src="images/IMG_20261009_001854.jpg";
-  img.alt="Hulk";
-  img.loading="lazy";
-  img.style.width="100%";
-  img.style.height="100%";
-  img.style.objectFit="cover";
-  img.style.padding="0";
-  img.style.boxSizing="border-box";
-  portrait.appendChild(img);
-}else 
-  if(c.name==="Captain America"){
-  const img=document.createElement("img");
-  img.src="images/IMG_20261009_001329.jpg";
-  img.alt="Captain America";
-  img.loading="lazy";
-  img.style.width="100%";
-  img.style.height="100%";
-  img.style.objectFit="cover";
-  img.style.padding="0";
-  img.style.boxSizing="border-box";
-  portrait.appendChild(img);
-}else 
-  if(c.name==="Iron Man"){
-  const img=document.createElement("img");
-  img.src="images/IMG_20261009_000559.jpg";
-  img.alt="Iron Man";
-  img.loading="lazy";
-  img.style.width="100%";
-  img.style.height="100%";
-  img.style.objectFit="cover";
-  img.style.padding="0";
-  img.style.boxSizing="border-box";
-  portrait.appendChild(img);
-}else 
-   if(c.name==="Thor"){
-  const img=document.createElement("img");
-  img.src="images/IMG_20261008_235233.jpg";
-  img.alt="Thor";
-  img.loading="lazy";
-  img.style.width="100%";
-  img.style.height="100%";
-  img.style.objectFit="cover";
-  img.style.padding="0";
-img.style.boxSizing="border-box";
+  const term = search.value.trim().toLocaleLowerCase();
+  const list = characters.filter(c =>
+    (selectedCategory === 'all' || c.category === selectedCategory) &&
+    (c.name.toLocaleLowerCase().includes(term) ||
+     c.ar.toLocaleLowerCase().includes(term))
+  );
 
- 
-  portrait.appendChild(img);
-}else{
-  portrait.textContent=c.symbol;
-   }
-   const info=document.createElement("div");
-   info.className="info";
-   const title=document.createElement("h2");
-   title.textContent=c.name;
-   const role=document.createElement("div");
-   role.className="role";
-   role.textContent=c.ar+" · "+c.role;
-   const status=document.createElement("span");
-   status.className="tag "+(c.category==="oc" || c.note.includes("موافقة") || c.note.includes("تُراجع") ? "review":"");
-   status.textContent=c.category==="oc"?"تحتاج موافقة":(status.classList.contains("review")?"تحتاج مراجعة":"متاحة مبدئيًا");
-   const note=document.createElement("p");
-   note.className="details";
-   note.textContent=c.note;
-   info.append(title,role,status,note);
-   card.append(portrait,info);
-   grid.appendChild(card);
- });
+  count.textContent = names[selectedCategory] + ' · ' + list.length;
+  grid.replaceChildren();
+
+  if (!list.length) {
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.textContent = 'لم نعثر على شخصية بهذا الاسم.';
+    grid.appendChild(empty);
+    return;
+  }
+
+  list.forEach(c => {
+    const card = document.createElement('article');
+    card.className = 'card';
+
+    const portrait = document.createElement('div');
+    portrait.className = 'portrait';
+
+    if (c.image) {
+      const img = document.createElement('img');
+      img.src = c.image;
+      img.alt = c.name;
+      img.loading = 'lazy';
+      img.onerror = () => {
+        img.remove();
+        portrait.textContent = c.symbol;
+      };
+      portrait.appendChild(img);
+    } else {
+      portrait.textContent = c.symbol;
+    }
+
+    const info = document.createElement('div');
+    info.className = 'info';
+
+    const title = document.createElement('h2');
+    title.textContent = c.name;
+
+    const role = document.createElement('div');
+    role.className = 'role';
+    role.textContent = c.ar + ' · ' + c.role;
+
+    const status = document.createElement('span');
+    const needsReview = c.category === 'oc' ||
+      c.note.includes('موافقة') ||
+      c.note.includes('تُراجع');
+
+    status.className = 'tag' + (needsReview ? ' review' : '');
+    status.textContent = c.category === 'oc'
+      ? 'تحتاج موافقة'
+      : (needsReview ? 'تحتاج مراجعة' : 'متاحة مبدئيًا');
+
+    const note = document.createElement('p');
+    note.className = 'details';
+    note.textContent = c.note;
+
+    info.append(title, role, status, note);
+    card.append(portrait, info);
+    grid.appendChild(card);
+  });
 }
-document.querySelectorAll(".filter").forEach(button=>{
- button.addEventListener("click",()=>{
-  selectedCategory=button.dataset.category;
-  document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b===button));
-  render();
- });
+
+document.querySelectorAll('.filter').forEach(button => {
+  button.addEventListener('click', () => {
+    selectedCategory = button.dataset.category;
+
+    document.querySelectorAll('.filter').forEach(b => {
+      b.classList.toggle('active', b === button);
+    });
+
+    render();
+  });
 });
-search.addEventListener("input",render);
+
+search.addEventListener('input', render);
 render();
- async function loadCharactersFromSupabase() {
+
+async function loadCharactersFromSupabase(){
   try {
     const response = await fetch(
       `${SUPABASE_URL}/rest/v1/characters?select=name,universe_role&order=name.asc`,
@@ -243,33 +220,45 @@ render();
     );
 
     if (!response.ok) {
-      throw new Error("تعذر تحميل الشخصيات من قاعدة البيانات.");
+      throw new Error(`Supabase HTTP ${response.status}`);
     }
 
     const rows = await response.json();
+    const byName = new Map(localCharacters.map(c => [c.name, c]));
 
-    const existing = new Map(characters.map(c => [c.name, c]));
-
-    characters = rows
-      .filter(row => row.name !== "Thanos")
+    const loaded = rows
+      .filter(row => row.name !== 'Thanos')
       .map(row => {
-        const old = existing.get(row.name);
+        const local = byName.get(row.name);
+        if (local) return local;
 
-        return old || {
+        const role = row.universe_role || 'hero';
+
+        return {
           name: row.name,
           ar: row.name,
-          category: row.universe_role === "villain" ? "villains" :
-                    row.universe_role === "original" ? "oc" : "heroes",
-          symbol: "🌌",
-          role: row.universe_role,
-          note: "حالة الشخصية تحتاج إلى مراجعة الإدارة"
+          category: role === 'villain'
+            ? 'villains'
+            : role === 'original' ? 'oc' : 'heroes',
+          symbol: '🌌',
+          role: role,
+          note: 'حالة الشخصية تحتاج إلى مراجعة الإدارة'
         };
       });
 
+    if (loaded.length) {
+      characters = loaded;
+    }
+
     render();
-  } catch (error) {
-    console.error(error);
-    count.textContent = "تعذر تحميل الشخصيات من قاعدة البيانات؛ نعرض القائمة المحلية.";
+  } catch(error) {
+    console.error(
+      'تعذر تحميل الشخصيات من Supabase؛ ستُعرض القائمة المحلية.',
+      error
+    );
+
+    characters = [...localCharacters];
+    render();
   }
 }
 
