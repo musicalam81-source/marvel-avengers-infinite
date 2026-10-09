@@ -66,7 +66,35 @@ footer{text-align:center;color:#7f8aa8;font-size:12px;padding:25px 0 10px}
 </main>
 
 <script>
-const characters = [
+const SUPABASE_URL = "https://tkwskjinrfbwwnwlyxjp.supabase.co";
+const SUPABASE_KEY = "sb_publishable_6oBvR-50nHxk5uEEX8Rs6Q_h58lFGki";
+
+let characters = [
+{name:"Thor",ar:"ثور",category:"heroes",symbol:"⚡",role:"بطل أسغاردي",note:"متاح للاختيار المبدئي"},
+{name:"Iron Man",ar:"آيرون مان",category:"heroes",symbol:"🤖",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
+{name:"Captain America",ar:"كابتن أمريكا",category:"heroes",symbol:"🛡️",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
+{name:"Hulk",ar:"هالك",category:"heroes",symbol:"💚",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
+{name:"Black Widow",ar:"بلاك ويدو",category:"heroes",symbol:"🕷️",role:"بطلة — Avengers",note:"متاح للاختيار المبدئي"},
+{name:"Hawkeye",ar:"هوك آي",category:"heroes",symbol:"🏹",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
+{name:"War Machine",ar:"وور ماشين",category:"heroes",symbol:"⚙️",role:"بطل — حليف آيرون مان",note:"متاح للاختيار المبدئي"},
+{name:"Falcon",ar:"فالكون",category:"heroes",symbol:"🪽",role:"بطل — حليف كابتن أمريكا",note:"تُراجع ملاءمته للخط الزمني"},
+{name:"Loki",ar:"لوكي",category:"villains",symbol:"🐍",role:"شخصية أسغاردية معقدة",note:"تُراجع حالته وفق الخط الزمني"},
+{name:"Red Skull",ar:"ريد سكول",category:"villains",symbol:"☠️",role:"عدو قديم لكابتن أمريكا",note:"تُراجع حالته وفق القصة"},
+{name:"Abomination",ar:"أبومينيشن",category:"villains",symbol:"👹",role:"خصم قوي",note:"يتطلب موافقة الإدارة"},
+{name:"Whiplash",ar:"ويبلاش",category:"villains",symbol:"⚡",role:"خصم آيرون مان",note:"تُراجع حالته وفق الخط الزمني"},
+{name:"Aldrich Killian",ar:"ألدريتش كيليان",category:"villains",symbol:"🔥",role:"خصم آيرون مان",note:"تُراجع حالته وفق الخط الزمني"},
+{name:"Malekith",ar:"مالكيث",category:"villains",symbol:"🌑",role:"زعيم الإلف المظلم",note:"تُراجع حالته بعد أحداث الفيلم"},
+{name:"Nick Fury",ar:"نيك فيوري",category:"shield",symbol:"🕶️",role:"مدير S.H.I.E.L.D.",note:"متاح للاختيار المبدئي"},
+{name:"Maria Hill",ar:"ماريا هيل",category:"shield",symbol:"🛡️",role:"قيادية في S.H.I.E.L.D.",note:"متاح للاختيار المبدئي"},
+{name:"Phil Coulson",ar:"فيل كولسون",category:"shield",symbol:"📁",role:"عميل S.H.I.E.L.D.",note:"تُراجع حالته وفق الخط الزمني"},
+{name:"Jasper Sitwell",ar:"جاسبر سيتويل",category:"shield",symbol:"🕵️",role:"عميل استخبارات",note:"تُراجع حالته وفق القصة"},
+{name:"Jane Foster",ar:"جين فوستر",category:"support",symbol:"🔬",role:"عالمة — مرتبطة بثور",note:"متاح للاختيار المبدئي"},
+{name:"Erik Selvig",ar:"إريك سيلفيغ",category:"support",symbol:"🔭",role:"عالم",note:"متاح للاختيار المبدئي"},
+{name:"Darcy Lewis",ar:"دارسي لويس",category:"support",symbol:"📚",role:"باحثة ومساعدة",note:"متاح للاختيار المبدئي"},
+{name:"Pepper Potts",ar:"بيبر بوتس",category:"support",symbol:"💼",role:"قيادية في Stark Industries",note:"متاح للاختيار المبدئي"},
+{name:"Heimdall",ar:"هايمدال",category:"support",symbol:"🌈",role:"حارس أسغارد",note:"متاح للاختيار المبدئي"},
+{name:"OC — شخصية أصلية",ar:"شخصيتك الخاصة",category:"oc",symbol:"🧬",role:"شخصية من ابتكار اللاعب",note:"تحتاج إلى موافقة الإدارة"}
+];
 {name:"Thor",ar:"ثور",category:"heroes",symbol:"⚡",role:"بطل أسغاردي",note:"متاح للاختيار المبدئي"},
 {name:"Iron Man",ar:"آيرون مان",category:"heroes",symbol:"🤖",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
 {name:"Captain America",ar:"كابتن أمريكا",category:"heroes",symbol:"🛡️",role:"بطل — Avengers",note:"متاح للاختيار المبدئي"},
