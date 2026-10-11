@@ -1,520 +1,659 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الشخصيات | MARVEL AVENGERS : INFINITE</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#050711;--panel:#0b1020;--border:#252e49;--accent:#7887ff;--muted:#aeb7d0}
-body{font-family:Arial,sans-serif;min-height:100vh;background:radial-gradient(circle at 15% 10%,#17295d,transparent 35%),radial-gradient(circle at 85% 70%,#35145c,transparent 35%),var(--bg);color:white;padding:24px 16px}
-.container{max-width:1100px;margin:auto}
-header{text-align:center;padding:22px 0 28px}
-.logo{font-size:42px;margin-bottom:12px}
-h1{font-size:clamp(27px,5vw,40px);margin-bottom:12px}
-header p{color:var(--muted);line-height:1.8}
-.notice{margin:0 auto 22px;padding:12px 15px;max-width:700px;background:#11182d;border:1px solid var(--border);border-radius:12px;color:#cbd3ed;font-size:14px;line-height:1.7}
-.search{width:100%;padding:15px 17px;border:1px solid var(--border);border-radius:12px;background:var(--panel);color:white;font-size:16px;outline:none;margin-bottom:17px}
-.search:focus{border-color:var(--accent)}
-.filters{display:flex;gap:9px;overflow-x:auto;padding:2px 1px 14px;margin-bottom:12px}
-.filter{white-space:nowrap;padding:11px 16px;border:1px solid var(--border);border-radius:24px;background:var(--panel);color:#dbe2fa;font-size:14px;cursor:pointer}
-.filter.active{background:var(--accent);border-color:var(--accent);color:#080b18;font-weight:bold}
-.count{color:var(--muted);font-size:14px;margin:5px 0 16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
-.card{overflow:hidden;background:rgba(11,16,32,.94);border:1px solid var(--border);border-radius:16px;transition:border-color .2s}
-.card:hover{border-color:var(--accent)}
-.portrait{height:190px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#111b37,#26153b);font-size:62px}
-.portrait img{width:100%;height:100%;object-fit:cover;display:block}
-.info{padding:16px}
-.info h2{font-size:20px;margin-bottom:8px}
-.role{font-size:13px;color:var(--muted);margin-bottom:14px}
-.tag{display:inline-block;font-size:12px;padding:6px 10px;border-radius:20px;background:#173b2a;color:#83edaa}
-.tag.review{background:#382d16;color:#f4d58b}
-.details{font-size:12px;color:#aeb7d0;line-height:1.6;margin-top:12px}
-.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:35px 10px}
-.back{display:block;width:fit-content;margin:30px auto 8px;text-decoration:none;color:#cbd3ed;padding:12px 18px;border:1px solid var(--border);border-radius:10px}
-footer{text-align:center;color:#7f8aa8;font-size:12px;padding:25px 0 10px}
-@media(max-width:480px){
-body{padding:15px 12px}
-.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.portrait{height:145px;font-size:48px}
-.info{padding:12px}
-.info h2{font-size:17px}
-.role{font-size:12px}
-.filter{padding:10px 13px}
-}
-  
-.card{cursor:pointer}
-.card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.modal{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:18px;overflow-y:auto}
-.modal.open{display:flex}
-.modal-box{position:relative;width:100%;max-width:480px;background:#0b1020;border:1px solid #39466c;border-radius:18px;padding:22px;text-align:center}
-.modal-close{position:absolute;top:10px;left:12px;background:#202943;color:white;border:0;border-radius:8px;padding:8px 12px;font-size:18px;cursor:pointer}
-.modal-image{width:100%;height:260px;object-fit:contain;background:#11182d;border-radius:12px;margin:18px 0}
-.modal-box h2{font-size:26px;margin-bottom:8px}
-.modal-box p{color:#c0c9e0;line-height:1.8;margin:10px 0}
-.reserve-btn{width:100%;padding:14px;border:0;border-radius:10px;background:#7887ff;color:#080b18;font-weight:bold;font-size:16px;cursor:pointer;margin-top:14px}
-.reserve-btn:disabled{opacity:.55;cursor:not-allowed}
-.modal-message{min-height:25px;font-size:14px;color:#f4d58b;margin-top:12px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b16">
+  <title>الشخصيات | MARVEL AVENGERS: INFINITE</title>
+
+  <style>
+    :root {
+      --bg: #080b16;
+      --panel: #111729;
+      --panel2: #192139;
+      --gold: #d8b66a;
+      --blue: #62a8ff;
+      --text: #f3f5fb;
+      --muted: #aab3c9;
+      --border: #2b3550;
+      --danger: #ff7777;
+      --green: #69d6a0;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at top, #182344 0%, var(--bg) 58%);
+      color: var(--text);
+      font-family: Arial, Tahoma, sans-serif;
+      min-height: 100vh;
+    }
+
+    button, input { font: inherit; }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .top {
+      padding: 22px 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: #090d19dd;
+    }
+
+    .brand {
+      color: var(--gold);
+      font-weight: 800;
+      letter-spacing: 1px;
+      font-size: clamp(19px, 4vw, 30px);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 9px 0 0;
+      font-size: 14px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 17px;
+    }
+
+    .nav-link {
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 9px 14px;
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    .nav-link:hover { border-color: var(--gold); }
+
+    main {
+      width: min(1200px, 100%);
+      padding: 25px 16px 55px;
+      margin: auto;
+    }
+
+    .intro { text-align: center; }
+
+    h1 {
+      font-size: clamp(24px, 5vw, 36px);
+      margin: 5px 0 10px;
+    }
+
+    .description {
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 650px;
+      margin: 0 auto 22px;
+    }
+
+    .notice {
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #111729;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 15px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .toolbar {
+      display: grid;
+      gap: 13px;
+      margin: 23px 0 15px;
+    }
+
+    .search {
+      width: 100%;
+      min-height: 47px;
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      outline: none;
+    }
+
+    .search:focus { border-color: var(--blue); }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .filter {
+      padding: 9px 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    .filter.active {
+      border-color: var(--gold);
+      background: #302a1d;
+      color: #ffe4a1;
+    }
+
+    .count {
+      color: var(--muted);
+      margin: 18px 0;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 16px;
+    }
+
+    .character-card {
+      overflow: hidden;
+      text-align: center;
+      background: linear-gradient(160deg, #18223b, #0e1425);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      transition: border-color .2s, transform .2s;
+    }
+
+    .character-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .character-card:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 3px;
+    }
+
+    .portrait {
+      height: 190px;
+      background: #0b1020;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .placeholder {
+      font-size: 58px;
+      color: var(--gold);
+    }
+
+    .card-info { padding: 12px; }
+
+    .card-info h2 {
+      font-size: 17px;
+      margin: 2px 0 8px;
+    }
+
+    .role {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 12px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      background: #173c30;
+      color: var(--green);
+      font-size: 12px;
+    }
+
+    .status.taken {
+      background: #43252b;
+      color: #ffaaaa;
+    }
+
+    .status.review {
+      background: #3c321c;
+      color: #f6d98e;
+    }
+
+    .details-btn, .reserve-btn {
+      width: 100%;
+      border: 1px solid var(--gold);
+      background: var(--gold);
+      color: #14100a;
+      font-weight: bold;
+      border-radius: 9px;
+      padding: 11px;
+      margin-top: 12px;
+    }
+
+    .details-btn:hover, .reserve-btn:hover {
+      filter: brightness(1.08);
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--muted);
+      padding: 35px 10px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      background: #000c;
+      padding: 15px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-box {
+      width: min(450px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 20px;
+      position: relative;
+      text-align: center;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      background: #252d43;
+      color: white;
+      border: 1px solid var(--border);
+    }
+
+    .modal-image {
+      width: 145px;
+      height: 165px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 24px;
+      background: #090d19;
+    }
+
+    .modal-box h2 { margin-bottom: 8px; }
+
+    .modal-box p {
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .modal-message {
+      color: var(--green);
+      line-height: 1.7;
+      margin-top: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      text-align: center;
+      padding: 23px 15px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    @media (max-width: 380px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .portrait { height: 155px; }
+      .card-info { padding: 9px; }
+    }
+  </style>
 </head>
+
 <body>
-<main class="container">
-<header>
-<div class="logo">🎭</div>
-<h1>قاعدة الشخصيات</h1>
-<p>اختر الشخصية التي تريد تجسيدها في عالم<br><strong>MARVEL AVENGERS : INFINITE</strong></p>
-</header>
+  <header class="top">
+    <div class="brand">MARVEL AVENGERS : INFINITE</div>
+    <p class="subtitle">الكون اللامتناهي · عالمك، قصتك، قراراتك</p>
+    <nav>
+      <a class="nav-link" href="index.html">الرئيسية</a>
+      <a class="nav-link" href="index.html#rules">القوانين</a>
+      <a class="nav-link" href="index.html#how-to-play">كيفية اللعب</a>
+      <a class="nav-link" id="accountLink" href="login.html">تسجيل الدخول</a>
+    </nav>
+  </header>
 
-<div class="notice">🌌 تبدأ أحداث السيرفر بعد Thor: The Dark World. القائمة أولية، وحالة الشخصية تحتاج إلى تأكيد الإدارة قبل اعتماد الحجز.</div>
+  <main>
+    <section class="intro">
+      <h1>اختر شخصيتك</h1>
+      <p class="description">
+        اختر شخصية واحدة وابدأ رحلتك داخل عالم Marvel.
+        الشخصيات المحجوزة لا يمكن اختيارها من لاعب آخر،
+        وبعض الشخصيات تحتاج إلى موافقة الإدارة.
+      </p>
+    </section>
 
-<input id="search" class="search" type="search" placeholder="🔍 ابحث عن اسم شخصية..." aria-label="ابحث عن شخصية">
+    <div class="notice" id="notice" role="status">
+      يتم عرض الشخصيات المحلية أولاً، ثم محاولة الاتصال بقاعدة البيانات.
+    </div>
 
-<nav class="filters" aria-label="تصنيفات الشخصيات">
-<button class="filter active" data-category="all">الكل</button>
-<button class="filter" data-category="heroes">🦸 الأبطال</button>
-<button class="filter" data-category="villains">😈 الأشرار</button>
-<button class="filter" data-category="shield">🛡️ S.H.I.E.L.D.</button>
-<button class="filter" data-category="support">🌌 المساندون</button>
-<button class="filter" data-category="oc">🧬 شخصيات أصلية</button>
-</nav>
+    <section class="toolbar" aria-label="البحث والتصنيف">
+      <input
+        class="search"
+        id="search"
+        type="search"
+        placeholder="ابحث عن شخصية..."
+        aria-label="البحث عن شخصية"
+      >
 
-<div class="count" id="count" aria-live="polite">تم فتح صفحة الشخصيات — جارٍ تشغيل النظام...</div>
-<section class="grid" id="grid" aria-label="قائمة الشخصيات"></section>
+      <div class="filters">
+        <button class="filter active" data-category="all">الكل</button>
+        <button class="filter" data-category="heroes">الأبطال</button>
+        <button class="filter" data-category="villains">الأشرار</button>
+        <button class="filter" data-category="shield">SHIELD</button>
+        <button class="filter" data-category="support">شخصيات أخرى</button>
+        <button class="filter" data-category="oc">شخصيات أصلية</button>
+      </div>
+    </section>
 
-<div class="modal" id="characterModal" role="dialog" aria-modal="true" aria-labelledby="modalName">
-  <div class="modal-box">
-    <button class="modal-close" id="modalClose" type="button" aria-label="إغلاق">✕</button>
-    <img class="modal-image" id="modalImage" alt="">
-    <h2 id="modalName"></h2>
-    <p id="modalRole"></p>
-    <p id="modalStatus"></p>
-    <p id="modalNote"></p>
-    <button class="reserve-btn" id="reserveBtn" type="button">اختيار هذه الشخصية</button>
-    <div class="modal-message" id="modalMessage" role="status"></div>
+    <div class="count" id="count" aria-live="polite">جارٍ تجهيز الشخصيات...</div>
+    <section class="grid" id="grid" aria-label="قائمة الشخصيات"></section>
+  </main>
+
+  <div class="modal" id="characterModal" role="dialog"
+       aria-modal="true" aria-labelledby="modalName">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" type="button"
+              aria-label="إغلاق">✕</button>
+
+      <img class="modal-image" id="modalImage" alt="">
+      <h2 id="modalName"></h2>
+      <p id="modalRole"></p>
+      <p id="modalStatus"></p>
+      <p id="modalNote"></p>
+
+      <button class="reserve-btn" id="reserveBtn" type="button">
+        اختيار هذه الشخصية
+      </button>
+
+      <div class="modal-message" id="modalMessage" role="status"></div>
+    </div>
   </div>
-</div>
-<a class="back" href="start.html">← العودة إلى صفحة البداية</a>
-<footer>MARVEL AVENGERS : INFINITE · عالم واحد، قصص لا نهائية</footer>
-</main>
 
-<script>
-'use strict';
+  <!-- تحميل مكتبة Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.8/dist/umd/supabase.js"></script>
 
-const SUPABASE_URL = 'https://tkwskjinrfbwwnwlyxjp.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_6oBvR-50nHxk5uEEX8Rs6Q_h58lFGki';
+  <script>
+    'use strict';
 
-const localCharacters = [
-{name:'Thor',ar:'ثور',category:'heroes',symbol:'⚡',role:'بطل أسغاردي',note:'متاح للاختيار المبدئي',image:'images/IMG_20261008_235233.jpg'},
-{name:'Iron Man',ar:'آيرون مان',category:'heroes',symbol:'🤖',role:'بطل — Avengers',note:'متاح للاختيار المبدئي',image:'images/IMG_20261009_000559.jpg'},
-{name:'Captain America',ar:'كابتن أمريكا',category:'heroes',symbol:'🛡️',role:'بطل — Avengers',note:'متاح للاختيار المبدئي',image:'images/IMG_20261009_001329.jpg'},
-{name:'Hulk',ar:'هالك',category:'heroes',symbol:'💚',role:'بطل — Avengers',note:'متاح للاختيار المبدئي',image:'images/IMG_20261009_001854.jpg'},
-{name:'Black Widow',ar:'بلاك ويدو',category:'heroes',symbol:'🕷️',role:'بطلة — Avengers',note:'متاح للاختيار المبدئي'},
-{name:'Hawkeye',ar:'هوك آي',category:'heroes',symbol:'🏹',role:'بطل — Avengers',note:'متاح للاختيار المبدئي'},
-{name:'War Machine',ar:'وور ماشين',category:'heroes',symbol:'⚙️',role:'بطل — حليف آيرون مان',note:'متاح للاختيار المبدئي'},
-{name:'Falcon',ar:'فالكون',category:'heroes',symbol:'🪽',role:'بطل — حليف كابتن أمريكا',note:'تُراجع ملاءمته للخط الزمني'},
-{name:'Loki',ar:'لوكي',category:'villains',symbol:'🐍',role:'شخصية أسغاردية معقدة',note:'تُراجع حالته وفق الخط الزمني'},
-{name:'Red Skull',ar:'ريد سكول',category:'villains',symbol:'☠️',role:'عدو قديم لكابتن أمريكا',note:'تُراجع حالته وفق القصة'},
-{name:'Abomination',ar:'أبومينيشن',category:'villains',symbol:'👹',role:'خصم قوي',note:'يتطلب موافقة الإدارة'},
-{name:'Whiplash',ar:'ويبلاش',category:'villains',symbol:'⚡',role:'خصم آيرون مان',note:'تُراجع حالته وفق الخط الزمني'},
-{name:'Aldrich Killian',ar:'ألدريتش كيليان',category:'villains',symbol:'🔥',role:'خصم آيرون مان',note:'تُراجع حالته وفق الخط الزمني'},
-{name:'Malekith',ar:'مالكيث',category:'villains',symbol:'🌑',role:'زعيم الإلف المظلم',note:'تُراجع حالته بعد أحداث الفيلم'},
-{name:'Nick Fury',ar:'نيك فيوري',category:'shield',symbol:'🕶️',role:'مدير S.H.I.E.L.D.',note:'متاح للاختيار المبدئي'},
-{name:'Maria Hill',ar:'ماريا هيل',category:'shield',symbol:'🛡️',role:'قيادية في S.H.I.E.L.D.',note:'متاح للاختيار المبدئي'},
-{name:'Phil Coulson',ar:'فيل كولسون',category:'shield',symbol:'📁',role:'عميل S.H.I.E.L.D.',note:'تُراجع حالته وفق الخط الزمني'},
-{name:'Jasper Sitwell',ar:'جاسبر سيتويل',category:'shield',symbol:'🕵️',role:'عميل استخبارات',note:'تُراجع حالته وفق القصة'},
-{name:'Jane Foster',ar:'جين فوستر',category:'support',symbol:'🔬',role:'عالمة — مرتبطة بثور',note:'متاح للاختيار المبدئي'},
-{name:'Erik Selvig',ar:'إريك سيلفيغ',category:'support',symbol:'🔭',role:'عالم',note:'متاح للاختيار المبدئي'},
-{name:'Darcy Lewis',ar:'دارسي لويس',category:'support',symbol:'📚',role:'باحثة ومساعدة',note:'متاح للاختيار المبدئي'},
-{name:'Pepper Potts',ar:'بيبر بوتس',category:'support',symbol:'💼',role:'قيادية في Stark Industries',note:'متاح للاختيار المبدئي'},
-{name:'Heimdall',ar:'هايمدال',category:'support',symbol:'🌈',role:'حارس أسغارد',note:'متاح للاختيار المبدئي'},
-{name:'OC — شخصية أصلية',ar:'شخصيتك الخاصة',category:'oc',symbol:'🧬',role:'شخصية من ابتكار اللاعب',note:'تحتاج إلى موافقة الإدارة'}
-];
+    const SUPABASE_URL = 'https://tkwskjinrfbwwnwlyxjp.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_6oBvR-50nHxk5uEEX8Rs6Q_h58lFGki';
 
-let characters = [...localCharacters];
+    const localCharacters = [
+      {name:'Thor', ar:'ثور', category:'heroes', symbol:'⚡', role:'بطل', image:'images/thor.jpg', note:'إله الرعد وحامل مطرقة ميولنير.'},
+      {name:'Iron Man', ar:'آيرون مان', category:'heroes', symbol:'🤖', role:'بطل', image:'images/iron-man.jpg', note:'توني ستارك، مخترع وصاحب الدرع المتطور.'},
+      {name:'Captain America', ar:'كابتن أمريكا', category:'heroes', symbol:'🛡️', role:'بطل', image:'images/captain-america.jpg', note:'ستيف روجرز، جندي يتمتع بالشجاعة والانضباط.'},
+      {name:'Hulk', ar:'هالك', category:'heroes', symbol:'💚', role:'بطل', image:'images/hulk.jpg', note:'بروس بانر يتحول إلى هالك عند الغضب.'},
+      {name:'Black Widow', ar:'بلاك ويدو', category:'heroes', symbol:'🕷️', role:'بطلة', image:'images/black-widow.jpg', note:'ناتاشا رومانوف، جاسوسة ومقاتلة ماهرة.'},
+      {name:'Hawkeye', ar:'هوك آي', category:'heroes', symbol:'🏹', role:'بطل', image:'images/hawkeye.jpg', note:'كلينت بارتون، رامٍ دقيق وخبير تكتيكي.'},
+      {name:'War Machine', ar:'وور ماشين', category:'heroes', symbol:'🦾', role:'بطل', image:'images/war-machine.jpg', note:'جيمس رودز، طيار يستخدم درعاً قتالياً.'},
+      {name:'Falcon', ar:'فالكون', category:'heroes', symbol:'🪽', role:'بطل', image:'images/falcon.jpg', note:'سام ويلسون، مقاتل يستخدم جناحين متطورين.'},
 
-const names = {
-all:'كل الشخصيات',
-heroes:'الأبطال',
-villains:'الأشرار',
-shield:'S.H.I.E.L.D.',
-support:'الشخصيات المساندة',
-oc:'الشخصيات الأصلية'
-};
+      {name:'Loki', ar:'لوكي', category:'villains', symbol:'🐍', role:'شخصية متقلبة', image:'images/loki.jpg', note:'أمير أسغارد، معروف بالخداع والسحر.'},
+      {name:'Red Skull', ar:'ريد سكول', category:'villains', symbol:'☠️', role:'شرير', image:'images/red-skull.jpg', note:'خصم خطير مرتبط بهيدرا.'},
+      {name:'Abomination', ar:'أبومينيشن', category:'villains', symbol:'👹', role:'شرير', image:'images/abomination.jpg', note:'خصم يمتلك قوة جسدية هائلة.'},
+      {name:'Whiplash', ar:'ويبلاش', category:'villains', symbol:'⚡', role:'شرير', image:'images/whiplash.jpg', note:'إيفان فانكو، مهندس يستخدم أسلحة طاقة.'},
+      {name:'Aldrich Killian', ar:'ألدريتش كيليان', category:'villains', symbol:'🔥', role:'شرير', image:'images/aldrich-killian.jpg', note:'باحث ورجل أعمال مرتبط بتقنية إكستريميس.'},
+      {name:'Malekith', ar:'ماليكيث', category:'villains', symbol:'🌑', role:'شرير', image:'images/malekith.jpg', note:'زعيم الإلف المظلم.'},
 
-let selectedCategory = 'all';
-const grid = document.getElementById('grid');
-const search = document.getElementById('search');
-const count = document.getElementById('count');
+      {name:'Nick Fury', ar:'نيك فيوري', category:'shield', symbol:'🕶️', role:'SHIELD', image:'images/nick-fury.jpg', note:'مدير سابق لمنظمة SHIELD.'},
+      {name:'Maria Hill', ar:'ماريا هيل', category:'shield', symbol:'🎯', role:'SHIELD', image:'images/maria-hill.jpg', note:'عميلة ومسؤولة ذات خبرة في العمليات.'},
+      {name:'Phil Coulson', ar:'فيل كولسون', category:'shield', symbol:'📁', role:'SHIELD', image:'images/phil-coulson.jpg', note:'عميل معروف بإخلاصه للفريق.'},
+      {name:'Jasper Sitwell', ar:'جاسبر سيتويل', category:'shield', symbol:'🕵️', role:'SHIELD', image:'images/jasper-sitwell.jpg', note:'عميل استخبارات.'},
 
-function render(){
-  const term = search.value.trim().toLocaleLowerCase();
-  const list = characters.filter(c =>
-    (selectedCategory === 'all' || c.category === selectedCategory) &&
-    (c.name.toLocaleLowerCase().includes(term) ||
-     c.ar.toLocaleLowerCase().includes(term))
-  );
+      {name:'Jane Foster', ar:'جين فوستر', category:'support', symbol:'🔬', role:'شخصية أخرى', image:'images/jane-foster.jpg', note:'عالمة فيزياء فلكية.'},
+      {name:'Erik Selvig', ar:'إريك سيلفيغ', category:'support', symbol:'🔭', role:'شخصية أخرى', image:'images/erik-selvig.jpg', note:'عالم متخصص في الفيزياء.'},
+      {name:'Darcy Lewis', ar:'دارسي لويس', category:'support', symbol:'🧪', role:'شخصية أخرى', image:'images/darcy-lewis.jpg', note:'باحثة ومساعدة في الأبحاث العلمية.'},
+      {name:'Pepper Potts', ar:'بيبر بوتس', category:'support', symbol:'💼', role:'شخصية أخرى', image:'images/pepper-potts.jpg', note:'شخصية إدارية محورية في شركة ستارك.'},
+      {name:'Heimdall', ar:'هايمدال', category:'support', symbol:'🌈', role:'أسغاردي', image:'images/heimdall.jpg', note:'حارس جسر بيڤروست في أسغارد.'},
 
-  count.textContent = names[selectedCategory] + ' · ' + list.length;
-  grid.replaceChildren();
+      {name:'Original Character', ar:'شخصية أصلية (OC)', category:'oc', symbol:'🌌', role:'تحتاج موافقة الإدارة', image:'', note:'يجب تقديم وصف الشخصية وقدراتها للإدارة قبل اعتمادها.'}
+    ];
 
-  if (!list.length) {
-    const empty = document.createElement('div');
-    empty.className = 'empty';
-    empty.textContent = 'لم نعثر على شخصية بهذا الاسم.';
-    grid.appendChild(empty);
-    return;
-  }
+    const grid = document.getElementById('grid');
+    const count = document.getElementById('count');
+    const search = document.getElementById('search');
+    const modal = document.getElementById('characterModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalName = document.getElementById('modalName');
+    const modalRole = document.getElementById('modalRole');
+    const modalStatus = document.getElementById('modalStatus');
+    const modalNote = document.getElementById('modalNote');
+    const modalMessage = document.getElementById('modalMessage');
+    const reserveBtn = document.getElementById('reserveBtn');
+    const notice = document.getElementById('notice');
+    const accountLink = document.getElementById('accountLink');
 
-  list.forEach(c => {
-    const card = document.createElement('article');
-    card.className = 'card';
+    let characters = localCharacters.map(c => ({...c}));
+    let selectedCategory = 'all';
+    let selectedCharacter = null;
+    let currentUser = null;
+    let supabaseClient = null;
+    let databaseReady = false;
 
-    const portrait = document.createElement('div');
-    portrait.className = 'portrait';
-
-    if (c.image) {
-      const img = document.createElement('img');
-      img.src = c.image;
-      img.alt = c.name;
-      img.loading = 'lazy';
-      img.onerror = () => {
-        img.remove();
-        portrait.textContent = c.symbol;
-      };
-      portrait.appendChild(img);
-    } else {
-      portrait.textContent = c.symbol;
+    function isReserved(c) {
+      return Boolean(c.reserved_by);
     }
 
-    const info = document.createElement('div');
-    info.className = 'info';
-
-<script type="module">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.8';
-
-const SUPABASE_URL = 'https://tkwskjinrfbwwnwlyxjp.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_6oBvR-50nHxk5uEEX8Rs6Q_h58lFGki';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-const localCharacters = [
-{name:'Thor',ar:'ثور',category:'heroes',symbol:'⚡',role:'بطل أسغاردي',note:'متاح للاختيار المبدئي',image:'images/IMG_20261008_235233.jpg'},
-{name:'Iron Man',ar:'آيرون مان',category:'heroes',symbol:'🤖',role:'بطل — Avengers',note:'متاح للاختيار المبدئي',image:'images/IMG_20261009_000559.jpg'},
-{name:'Captain America',ar:'كابتن أمريكا',category:'heroes',symbol:'🛡️',role:'بطل — Avengers',note:'متاح للاختيار المبدئي',image:'images/IMG_20261009_001329.jpg'},
-{name:'Hulk',ar:'هالك',category:'heroes',symbol:'💚',role:'بطل — Avengers',note:'متاح للاختيار المبدئي',image:'images/IMG_20261009_001854.jpg'},
-{name:'Black Widow',ar:'بلاك ويدو',category:'heroes',symbol:'🕷️',role:'بطلة — Avengers',note:'متاح للاختيار المبدئي'},
-{name:'Hawkeye',ar:'هوك آي',category:'heroes',symbol:'🏹',role:'بطل — Avengers',note:'متاح للاختيار المبدئي'},
-{name:'War Machine',ar:'وور ماشين',category:'heroes',symbol:'⚙️',role:'بطل — حليف آيرون مان',note:'متاح للاختيار المبدئي'},
-{name:'Falcon',ar:'فالكون',category:'heroes',symbol:'🪽',role:'بطل — حليف كابتن أمريكا',note:'تُراجع ملاءمته للخط الزمني'},
-{name:'Loki',ar:'لوكي',category:'villains',symbol:'🐍',role:'شخصية أسغاردية معقدة',note:'تُراجع حالته وفق الخط الزمني'},
-{name:'Red Skull',ar:'ريد سكول',category:'villains',symbol:'☠️',role:'عدو قديم لكابتن أمريكا',note:'تُراجع حالته وفق القصة'},
-{name:'Abomination',ar:'أبومينيشن',category:'villains',symbol:'👹',role:'خصم قوي',note:'يتطلب موافقة الإدارة'},
-{name:'Whiplash',ar:'ويبلاش',category:'villains',symbol:'⚡',role:'خصم آيرون مان',note:'تُراجع حالته وفق الخط الزمني'},
-{name:'Aldrich Killian',ar:'ألدريتش كيليان',category:'villains',symbol:'🔥',role:'خصم آيرون مان',note:'تُراجع حالته وفق الخط الزمني'},
-{name:'Malekith',ar:'مالكيث',category:'villains',symbol:'🌑',role:'زعيم الإلف المظلم',note:'تُراجع حالته بعد أحداث الفيلم'},
-{name:'Nick Fury',ar:'نيك فيوري',category:'shield',symbol:'🕶️',role:'مدير S.H.I.E.L.D.',note:'متاح للاختيار المبدئي'},
-{name:'Maria Hill',ar:'ماريا هيل',category:'shield',symbol:'🛡️',role:'قيادية في S.H.I.E.L.D.',note:'متاح للاختيار المبدئي'},
-{name:'Phil Coulson',ar:'فيل كولسون',category:'shield',symbol:'📁',role:'عميل S.H.I.E.L.D.',note:'تُراجع حالته وفق الخط الزمني'},
-{name:'Jasper Sitwell',ar:'جاسبر سيتويل',category:'shield',symbol:'🕵️',role:'عميل استخبارات',note:'تُراجع حالته وفق القصة'},
-{name:'Jane Foster',ar:'جين فوستر',category:'support',symbol:'🔬',role:'عالمة — مرتبطة بثور',note:'متاح للاختيار المبدئي'},
-{name:'Erik Selvig',ar:'إريك سيلفيغ',category:'support',symbol:'🔭',role:'عالم',note:'متاح للاختيار المبدئي'},
-{name:'Darcy Lewis',ar:'دارسي لويس',category:'support',symbol:'📚',role:'باحثة ومساعدة',note:'متاح للاختيار المبدئي'},
-{name:'Pepper Potts',ar:'بيبر بوتس',category:'support',symbol:'💼',role:'قيادية في Stark Industries',note:'متاح للاختيار المبدئي'},
-{name:'Heimdall',ar:'هايمدال',category:'support',symbol:'🌈',role:'حارس أسغارد',note:'متاح للاختيار المبدئي'},
-{name:'OC — شخصية أصلية',ar:'شخصيتك الخاصة',category:'oc',symbol:'🧬',role:'شخصية من ابتكار اللاعب',note:'تحتاج إلى موافقة الإدارة'}
-];
-
-const names = {
-all:'كل الشخصيات',
-heroes:'الأبطال',
-villains:'الأشرار',
-shield:'S.H.I.E.L.D.',
-support:'الشخصيات المساندة',
-oc:'الشخصيات الأصلية'
-};
-
-let characters = [...localCharacters];
-let selectedCategory = 'all';
-let selectedCharacter = null;
-
-const grid = document.getElementById('grid');
-const search = document.getElementById('search');
-const count = document.getElementById('count');
-const modal = document.getElementById('characterModal');
-const modalImage = document.getElementById('modalImage');
-const modalName = document.getElementById('modalName');
-const modalRole = document.getElementById('modalRole');
-const modalStatus = document.getElementById('modalStatus');
-const modalNote = document.getElementById('modalNote');
-const reserveBtn = document.getElementById('reserveBtn');
-const modalMessage = document.getElementById('modalMessage');
-
-let currentUser = null;
-
-function needsReview(c) {
-  return c.category === 'oc' ||
-    c.note.includes('موافقة') ||
-    c.note.includes('تُراجع');
-}
-
-function statusText(c) {
-  if (c.reserved_by) {
-    return c.reserved_by === currentUser?.id
-      ? 'محجوزة لك'
-      : 'محجوزة للاعب آخر';
-  }
-  return needsReview(c)
-    ? 'تحتاج مراجعة الإدارة'
-    : 'متاحة مبدئيًا';
-}
-
-function render() {
-  const term = search.value.trim().toLocaleLowerCase();
-  const list = characters.filter(c =>
-    (selectedCategory === 'all' || c.category === selectedCategory) &&
-    (c.name.toLocaleLowerCase().includes(term) ||
-     c.ar.toLocaleLowerCase().includes(term))
-  );
-
-  count.textContent = names[selectedCategory] + ' · ' + list.length;
-  grid.replaceChildren();
-
-  if (!list.length) {
-    const empty = document.createElement('div');
-    empty.className = 'empty';
-    empty.textContent = 'لم نعثر على شخصية بهذا الاسم.';
-    grid.appendChild(empty);
-    return;
-  }
-
-  list.forEach(c => {
-    const card = document.createElement('article');
-    card.className = 'card';
-    card.tabIndex = 0;
-    card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', 'تفاصيل ' + c.name);
-
-    const portrait = document.createElement('div');
-    portrait.className = 'portrait';
-
-    if (c.image) {
-      const img = document.createElement('img');
-      img.src = c.image;
-      img.alt = c.name;
-      img.loading = 'lazy';
-      img.onerror = () => {
-        img.remove();
-        portrait.textContent = c.symbol;
-      };
-      portrait.appendChild(img);
-    } else {
-      portrait.textContent = c.symbol;
+    function needsReview(c) {
+      return c.category === 'oc' ||
+        c.role === 'تحتاج موافقة الإدارة' ||
+        c.universe_role === 'original';
     }
 
-    const info = document.createElement('div');
-    info.className = 'info';
+    function statusText(c) {
+      if (isReserved(c)) return 'محجوزة';
+      if (needsReview(c)) return 'تحتاج موافقة الإدارة';
+      return 'متاحة مبدئياً';
+    }
 
-    const title = document.createElement('h2');
-    title.textContent = c.name;
+    function roleText(c) {
+      const names = {
+        heroes:'بطل / بطلة',
+        villains:'شرير',
+        shield:'SHIELD',
+        support:'شخصية أخرى',
+        oc:'شخصية أصلية'
+      };
+      return names[c.category] || c.role || 'شخصية';
+    }
 
-    const role = document.createElement('div');
-    role.className = 'role';
-    role.textContent = c.ar + ' · ' + c.role;
+    function createPortrait(c, className) {
+      const box = document.createElement('div');
+      box.className = className;
 
-    const status = document.createElement('span');
-    const reserved = Boolean(c.reserved_by);
-    status.className = 'tag' + (reserved || needsReview(c) ? ' review' : '');
-    status.textContent = statusText(c);
-
-    const note = document.createElement('p');
-    note.className = 'details';
-    note.textContent = c.note;
-
-    info.append(title, role, status, note);
-    card.append(portrait, info);
-    card.addEventListener('click', () => openCharacter(c));
-    card.addEventListener('keydown', event => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openCharacter(c);
-      }
-    });
-    grid.appendChild(card);
-  });
-}
-
-function openCharacter(c) {
-  selectedCharacter = c;
-  modalName.textContent = c.name + ' — ' + c.ar;
-  modalRole.textContent = c.role;
-  modalStatus.textContent = 'الحالة: ' + statusText(c);
-  modalNote.textContent = c.note;
-  modalImage.src = c.image || '';
-  modalImage.alt = c.name;
-  modalImage.style.display = c.image ? 'block' : 'none';
-  modalMessage.textContent = '';
-  updateReserveButton();
-  modal.classList.add('open');
-  document.getElementById('modalClose').focus();
-}
-
-function closeModal() {
-  modal.classList.remove('open');
-  selectedCharacter = null;
-}
-
-function updateReserveButton() {
-  const c = selectedCharacter;
-  if (!c) return;
-
-  if (!currentUser) {
-    reserveBtn.disabled = false;
-    reserveBtn.textContent = 'سجّل الدخول للاختيار';
-  } else if (c.reserved_by === currentUser.id) {
-    reserveBtn.disabled = true;
-    reserveBtn.textContent = 'هذه الشخصية محجوزة لك';
-  } else if (c.reserved_by) {
-    reserveBtn.disabled = true;
-    reserveBtn.textContent = 'الشخصية محجوزة';
-  } else if (needsReview(c)) {
-    reserveBtn.disabled = true;
-    reserveBtn.textContent = 'تحتاج موافقة الإدارة';
-  } else if (!c.id) {
-    reserveBtn.disabled = true;
-    reserveBtn.textContent = 'الحجز غير متاح لهذه الشخصية بعد';
-  } else {
-    reserveBtn.disabled = false;
-    reserveBtn.textContent = 'اختيار هذه الشخصية';
-  }
-}
-
-document.getElementById('modalClose').addEventListener('click', closeModal);
-modal.addEventListener('click', event => {
-  if (event.target === modal) closeModal();
-});
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && modal.classList.contains('open')) closeModal();
-});
-
-document.querySelectorAll('.filter').forEach(button => {
-  button.addEventListener('click', () => {
-    selectedCategory = button.dataset.category;
-    document.querySelectorAll('.filter').forEach(b =>
-      b.classList.toggle('active', b === button)
-    );
-    render();
-  });
-});
-search.addEventListener('input', render);
-
-reserveBtn.addEventListener('click', async () => {
-  if (!selectedCharacter) return;
-
-  if (!currentUser) {
-    window.location.href = 'login.html';
-    return;
-  }
-
-  const c = selectedCharacter;
-  if (!c.id || c.reserved_by || needsReview(c)) return;
-
-  reserveBtn.disabled = true;
-  modalMessage.textContent = 'جارٍ تنفيذ الحجز...';
-
-  const { data, error } = await supabase.rpc('reserve_character', {
-    character_id: c.id
-  });
-
-  if (error) {
-    modalMessage.textContent = 'تعذر الحجز. تأكد من تسجيل الدخول ثم أعد المحاولة.';
-    console.error('Reservation error:', error);
-    updateReserveButton();
-    return;
-  }
-
-  if (!data?.success) {
-    modalMessage.textContent = data?.message || 'لم ينجح الحجز.';
-    await loadCharactersFromSupabase();
-    selectedCharacter = characters.find(item => item.id === c.id) || c;
-    modalStatus.textContent = 'الحالة: ' + statusText(selectedCharacter);
-    updateReserveButton();
-    return;
-  }
-
-  modalMessage.textContent = 'تم حجز الشخصية بنجاح!';
-  await loadCharactersFromSupabase();
-  selectedCharacter = characters.find(item => item.id === c.id) || c;
-  modalStatus.textContent = 'الحالة: ' + statusText(selectedCharacter);
-  updateReserveButton();
-});
-
-
-async function loadCharactersFromSupabase() {
-  count.textContent = 'بدأ تشغيل JavaScript بنجاح...';
-  try {
-    const { data, error } = await supabase
-      .from('characters')
-      .select('id,name,universe_role,reserved_by')
-      .order('name', { ascending: true })
-      .abortSignal(AbortSignal.timeout(10000));
-
-    if (error) throw error;
-
-    const byName = new Map(localCharacters.map(c => [c.name, c]));
-
-    characters = (data || [])
-      .filter(row => row.name !== 'Thanos')
-      .map(row => {
-        const local = byName.get(row.name);
-        const role = row.universe_role || 'hero';
-
-        return {
-          ...(local || {
-            name: row.name,
-            ar: row.name,
-            category: role === 'villain'
-              ? 'villains'
-              : role === 'original' ? 'oc' : 'heroes',
-            symbol: '🌌',
-            role,
-            note: 'حالة الشخصية تحتاج إلى مراجعة الإدارة'
-          }),
-          id: row.id,
-          reserved_by: row.reserved_by
+      if (c.image) {
+        const img = document.createElement('img');
+        img.src = c.image;
+        img.alt = c.ar;
+        img.loading = 'lazy';
+        img.onerror = () => {
+          box.replaceChildren();
+          const fallback = document.createElement('span');
+          fallback.className = 'placeholder';
+          fallback.textContent = c.symbol || '🌌';
+          box.appendChild(fallback);
         };
+        box.appendChild(img);
+      } else {
+        const fallback = document.createElement('span');
+        fallback.className = 'placeholder';
+        fallback.textContent = c.symbol || '🌌';
+        box.appendChild(fallback);
+      }
+      return box;
+    }
+
+    function render() {
+      const query = search.value.trim().toLowerCase();
+
+      const filtered = characters.filter(c => {
+        const matchesCategory =
+          selectedCategory === 'all' || c.category === selectedCategory;
+        const matchesSearch =
+          (c.name + ' ' + c.ar + ' ' + roleText(c))
+            .toLowerCase().includes(query);
+        return matchesCategory && matchesSearch;
       });
 
-    render();
-    count.textContent = 'تم تحميل ' + characters.length + ' شخصية';
-  } catch (error) {
-    console.error('خطأ تحميل الشخصيات:', error);
-    characters = [...localCharacters];
-    render();
-    count.textContent =
-      'القائمة المحلية · تعذّر الاتصال بقاعدة البيانات';
-  }
-}
+      grid.replaceChildren();
 
-async function initialize() {
-  try {
-    const { data, error } = await supabase.auth.getUser();
-    currentUser = error ? null : data.user;
-  } catch (error) {
-    console.error('خطأ التحقق من تسجيل الدخول:', error);
-    currentUser = null;
-  }
+      if (!filtered.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty';
+        empty.textContent = 'لم نجد شخصيات تطابق بحثك.';
+        grid.appendChild(empty);
+      }
 
-  await loadCharactersFromSupabase();
-}
+      filtered.forEach(c => {
+        const card = document.createElement('article');
+        card.className = 'character-card';
 
-initialize();
-</script>
-  ```html
-<script>
-document.getElementById('count').textContent = 'اختبار JavaScript: يعمل';
-</script>
-```
-  
-</body>
-</html>
+        card.appendChild(createPortrait(c, 'portrait'));
+
+        const info = document.createElement('div');
+        info.className = 'card-info';
+
+        const title = document.createElement('h2');
+        title.textContent = c.ar;
+
+        const role = document.createElement('p');
+        role.className = 'role';
+        role.textContent = roleText(c);
+
+        const status = document.createElement('span');
+        status.className = 'status' +
+          (isReserved(c) ? ' taken' : needsReview(c) ? ' review' : '');
+        status.textContent = statusText(c);
+
+        const button = document.createElement('button');
+        button.className = 'details-btn';
+        button.type = 'button';
+        button.textContent = 'عرض التفاصيل';
+        button.addEventListener('click', () => openCharacter(c));
+
+        info.append(title, role, status, button);
+        card.appendChild(info);
+        grid.appendChild(card);
+      });
+
+      count.textContent = 'عدد الشخصيات المعروضة: ' + filtered.length;
+    }
+
+    function openCharacter(c) {
+      selectedCharacter = c;
+      modalImage.onerror = () => {
+        modalImage.style.display = 'none';
+      };
+      modalImage.onload = () => {
+        modalImage.style.display = 'inline-block';
+      };
+
+      if (c.image) {
+        modalImage.src = c.image;
+        modalImage.alt = c.ar;
+        modalImage.style.display = 'inline-block';
+      } else {
+        modalImage.removeAttribute('src');
+        modalImage.style.display = 'none';
+      }
+
+      modalName.textContent = c.ar;
+      modalRole.textContent = 'التصنيف: ' + roleText(c);
+      modalStatus.textContent = 'الحالة: ' + statusText(c);
+      modalNote.textContent = c.note || 'لا توجد تفاصيل إضافية.';
+      modalMessage.textContent = '';
+      updateReserveButton();
+      modal.classList.add('open');
+      document.getElementById('modalClose').focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      selectedCharacter = null;
+    }
+
+    function updateReserveButton() {
+      const c = selectedCharacter;
+      reserveBtn.disabled = false;
+
+      if (!c) {
+        reserveBtn.disabled = true;
+        reserveBtn.textContent = 'اختيار هذه الشخصية';
+      } else if (isReserved(c)) {
+        reserveBtn.disabled = true;
+        reserveBtn.textContent = 'الشخصية محجوزة';
+      } else if (needsReview(c)) {
+        reserveBtn.disabled = true;
+        reserveBtn.textContent = 'تحتاج موافقة الإدارة';
+      } else if (!databaseReady || !c.id) {
+        reserveBtn.disabled = true;
+        reserveBtn.textContent = 'الحجز غير متاح حالياً';
+      } else {
+        reserveBtn.textContent = 'اختيار هذه الشخصية';
+      }
+    }
+
+    document.getElementById('modalClose')
+      .addEventListener('click', closeModal);
+
+    modal.addEventListener('click', event => {
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && modal.classList.contains('open')) {
+        closeModal();
+      }
+    });
+
+    document.querySelectorAll('.filter').forEach(button => {
+      button.addEventListener('click', () => {
+        selectedCategory = button.dataset.category;
+        document.querySelectorAll('.filter').forEach(b => {
+          b.classList.toggle('active', b === button);
+        });
+        render();
+      });
+    });
+
+    search.addEventListener('input', render);
+
+    async function loadCharactersFromSupabase() {
+      const { data, error } = await supabaseClient
+        .from('characters')
+        .select('
