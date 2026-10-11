@@ -459,6 +459,30 @@
     </div>
 
   </footer>
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
+  const supabase = createClient(
+    'https://tkwskjinrfbwwnwlyxjp.supabase.co',
+    'sb_publishable_6oBvR-50nHxk5uEEX8Rs6Q_h58lFGki'
+  );
+
+  const loginLink = document.querySelector('.nav-button');
+
+  async function updateLoginLink() {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (loginLink && session) {
+      loginLink.textContent = 'حسابي';
+      loginLink.href = 'characters.html';
+    }
+  }
+
+  updateLoginLink();
+
+  supabase.auth.onAuthStateChange(() => {
+    updateLoginLink();
+  });
+</script>
 </body>
 </html>
