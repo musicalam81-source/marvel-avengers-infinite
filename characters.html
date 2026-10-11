@@ -451,8 +451,7 @@ reserveBtn.addEventListener('click', async () => {
 
 
 async function loadCharactersFromSupabase() {
-  count.textContent = 'جارٍ الاتصال بقاعدة البيانات...';
-
+  count.textContent = 'بدأ تشغيل JavaScript بنجاح...';
   try {
     const { data, error } = await supabase
       .from('characters')
