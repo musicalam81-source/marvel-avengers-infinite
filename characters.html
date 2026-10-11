@@ -43,6 +43,19 @@ body{padding:15px 12px}
 .role{font-size:12px}
 .filter{padding:10px 13px}
 }
+  
+.card{cursor:pointer}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.modal{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:18px;overflow-y:auto}
+.modal.open{display:flex}
+.modal-box{position:relative;width:100%;max-width:480px;background:#0b1020;border:1px solid #39466c;border-radius:18px;padding:22px;text-align:center}
+.modal-close{position:absolute;top:10px;left:12px;background:#202943;color:white;border:0;border-radius:8px;padding:8px 12px;font-size:18px;cursor:pointer}
+.modal-image{width:100%;height:260px;object-fit:contain;background:#11182d;border-radius:12px;margin:18px 0}
+.modal-box h2{font-size:26px;margin-bottom:8px}
+.modal-box p{color:#c0c9e0;line-height:1.8;margin:10px 0}
+.reserve-btn{width:100%;padding:14px;border:0;border-radius:10px;background:#7887ff;color:#080b18;font-weight:bold;font-size:16px;cursor:pointer;margin-top:14px}
+.reserve-btn:disabled{opacity:.55;cursor:not-allowed}
+.modal-message{min-height:25px;font-size:14px;color:#f4d58b;margin-top:12px}
 </style>
 </head>
 <body>
