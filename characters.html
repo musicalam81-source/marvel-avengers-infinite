@@ -449,50 +449,64 @@ reserveBtn.addEventListener('click', async () => {
   updateReserveButton();
 });
 
+
 async function loadCharactersFromSupabase() {
-  const { data, error } = await supabase
-    .from('characters')
-    .select('id,name,universe_role,reserved_by')
-    .order('name', { ascending: true });
+  count.textContent = 'جارٍ الاتصال بقاعدة البيانات...';
 
-  if (error) {
-    console.error('Supabase characters error:', error);
-    modalMessage.textContent = 'تعذر تحميل حالة الحجز من قاعدة البيانات.';
-    return;
+  try {
+    const { data, error } = await supabase
+      .from('characters')
+      .select('id,name,universe_role,reserved_by')
+      .order('name', { ascending: true })
+      .abortSignal(AbortSignal.timeout(10000));
+
+    if (error) throw error;
+
+    const byName = new Map(localCharacters.map(c => [c.name, c]));
+
+    characters = (data || [])
+      .filter(row => row.name !== 'Thanos')
+      .map(row => {
+        const local = byName.get(row.name);
+        const role = row.universe_role || 'hero';
+
+        return {
+          ...(local || {
+            name: row.name,
+            ar: row.name,
+            category: role === 'villain'
+              ? 'villains'
+              : role === 'original' ? 'oc' : 'heroes',
+            symbol: '🌌',
+            role,
+            note: 'حالة الشخصية تحتاج إلى مراجعة الإدارة'
+          }),
+          id: row.id,
+          reserved_by: row.reserved_by
+        };
+      });
+
+    render();
+    count.textContent = 'تم تحميل ' + characters.length + ' شخصية';
+  } catch (error) {
+    console.error('خطأ تحميل الشخصيات:', error);
+    characters = [...localCharacters];
+    render();
+    count.textContent =
+      'القائمة المحلية · تعذّر الاتصال بقاعدة البيانات';
   }
-
-  const byName = new Map(localCharacters.map(c => [c.name, c]));
-
-  characters = (data || [])
-    .filter(row => row.name !== 'Thanos')
-    .map(row => {
-      const local = byName.get(row.name);
-      const role = row.universe_role || 'hero';
-
-      return {
-        ...(local || {
-          name: row.name,
-          ar: row.name,
-          category: role === 'villain'
-            ? 'villains'
-            : role === 'original' ? 'oc' : 'heroes',
-          symbol: '🌌',
-          role,
-          note: 'حالة الشخصية تحتاج إلى مراجعة الإدارة'
-        }),
-        id: row.id,
-        reserved_by: row.reserved_by
-      };
-    });
-
-  render();
 }
 
 async function initialize() {
-  const { data, error } = await supabase.auth.getUser();
-  currentUser = error ? null : data.user;
+  try {
+    const { data, error } = await supabase.auth.getUser();
+    currentUser = error ? null : data.user;
+  } catch (error) {
+    console.error('خطأ التحقق من تسجيل الدخول:', error);
+    currentUser = null;
+  }
+
   await loadCharactersFromSupabase();
-  render();
 }
 
 initialize();
