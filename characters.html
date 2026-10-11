@@ -82,6 +82,18 @@ body{padding:15px 12px}
 <div class="count" id="count" aria-live="polite">جارٍ تحميل الشخصيات...</div>
 <section class="grid" id="grid" aria-label="قائمة الشخصيات"></section>
 
+<div class="modal" id="characterModal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" type="button" aria-label="إغلاق">✕</button>
+    <img class="modal-image" id="modalImage" alt="">
+    <h2 id="modalName"></h2>
+    <p id="modalRole"></p>
+    <p id="modalStatus"></p>
+    <p id="modalNote"></p>
+    <button class="reserve-btn" id="reserveBtn" type="button">اختيار هذه الشخصية</button>
+    <div class="modal-message" id="modalMessage" role="status"></div>
+  </div>
+</div>
 <a class="back" href="start.html">← العودة إلى صفحة البداية</a>
 <footer>MARVEL AVENGERS : INFINITE · عالم واحد، قصص لا نهائية</footer>
 </main>
