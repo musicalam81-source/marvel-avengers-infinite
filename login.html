@@ -84,7 +84,13 @@
     const SUPABASE_URL = 'https://tkwskjinrfbwwnwlyxjp.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_6oBvR-50nHxk5uEEX8Rs6Q_h58lFGki';
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
+  }
+});
     const form = document.getElementById('authForm');
     const message = document.getElementById('message');
     const loginBtn = document.getElementById('loginBtn');
